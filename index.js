@@ -1,8 +1,18 @@
-const express = require("express");
-const app = express();
+const { PrismaClient } = require("@prisma/client");
+require("dotenv").config();
 
-app.get("/", (req, res) => {
-  res.send("Running success");
-});
+const prisma = new PrismaClient();
 
-app.listen(3000);
+async function main() {
+  const user = await prisma.user.create({
+    data: {
+      email: "abc@gmail.com",
+      name: "Binh",
+    },
+  });
+  console.log(user);
+}
+
+main()
+  .catch(console.error)
+  .finally(() => prisma.$disconnect());
