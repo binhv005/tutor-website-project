@@ -7,8 +7,178 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Status {
+  PENDING
+  ACCEPT
+  REJECT
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  user_id  Int    @id @default(autoincrement())
+  username String
+  email    String @unique
+  password String
+
+  profile       Profile?
+  user_roles    UserRole[]
+  enrollments   Enrollment[]
+  classes       Class[]
+  blogs         Blog[]
+  notifications Notification[]
+  uploaded_docs Doc[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Profile {
+  profile_id        Int     @id @default(autoincrement())
+  phone             String  @unique
+  address           String
+  avatar            String?
+  education         String?
+  experience        String?
+  subject_specialty String?
+
+  status Status @default(PENDING)
+
+  user_id Int  @unique
+  user    User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Role {
+  role_id Int    @id @default(autoincrement())
+  name    String @unique
+
+  user_roles UserRole[]
+}
+
+model UserRole {
+  user_id Int
+  role_id Int
+
+  user User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  role Role @relation(fields: [role_id], references: [role_id], onDelete: Cascade)
+
+  @@id([user_id, role_id])
+}
+
+model Course {
+  course_id   Int     @id @default(autoincrement())
+  course_name String
+  description String?
+
+  classes Class[]
+  docs    Doc[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Class {
+  class_id Int    @id @default(autoincrement())
+  name     String
+
+  teacher_id Int
+  teacher    User @relation(fields: [teacher_id], references: [user_id], onDelete: Cascade)
+
+  course_id Int
+  course    Course @relation(fields: [course_id], references: [course_id], onDelete: Cascade)
+
+  capacity  Int?
+  address   String?
+  meet_link String?
+
+  start_date DateTime?
+  end_date   DateTime?
+
+  enrollments Enrollment[]
+  schedules   Schedule[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Enrollment {
+  user_id  Int
+  class_id Int
+
+  payment_status    PaymentStatus    @default(PENDING)
+  enrollment_status EnrollmentStatus @default(ACTIVE)
+
+  enrolled_at DateTime @default(now())
+
+  user  User  @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  class Class @relation(fields: [class_id], references: [class_id], onDelete: Cascade)
+
+  @@id([user_id, class_id])
+}
+
+model Blog {
+  blog_id Int    @id @default(autoincrement())
+  title   String
+  content String
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Notification {
+  notification_id Int    @id @default(autoincrement())
+  description     String
+
+  is_read Boolean @default(false)
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+}
+
+model Schedule {
+  schedule_id Int @id @default(autoincrement())
+
+  class_id Int
+  class    Class @relation(fields: [class_id], references: [class_id], onDelete: Cascade)
+
+  start_time  DateTime
+  end_time    DateTime
+  day_of_week String
+
+  created_at DateTime @default(now())
+}
+
+model Doc {
+  doc_id Int @id @default(autoincrement())
+
+  title    String
+  file_url String?
+
+  course_id Int
+  course    Course @relation(fields: [course_id], references: [course_id], onDelete: Cascade)
+
+  uploaded_by Int
+  uploader    User @relation(fields: [uploaded_by], references: [user_id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
