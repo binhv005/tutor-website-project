@@ -1,18 +1,12 @@
-const { PrismaClient } = require("@prisma/client");
-require("dotenv").config();
+const express = require("express");
+const app = express();
+const authRoute = require("./routes/authRoutes");
+app.use(express.json());
 
-const prisma = new PrismaClient();
+app.use("/api/auth", authRoute);
 
-async function main() {
-  const user = await prisma.user.create({
-    data: {
-      email: "abc@gmail.com",
-      name: "Binh",
-    },
-  });
-  console.log(user);
-}
+const PORT = process.env.PORT || 5050;
 
-main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect());
+app.listen(PORT, () => {
+  console.log(`Server running tai Port ${PORT}`);
+});
