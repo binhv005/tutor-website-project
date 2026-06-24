@@ -3,10 +3,10 @@ const bcrypt = require("bcrypt");
 const prisma = require("../config/prisma");
 
 exports.register = async (req, res) => {
-  const { email, password, username, role_id } = req.body;
+  const { email, password, name, role } = req.body;
   try {
     // Kiểm tra đầu vào
-    if (!email || !password || !username || !role_id)
+    if (!email || !password || !name || !role)
       return res
         .status(400)
         .json({ message: "Vui lòng nhập đầy đủ thông tin" });
@@ -29,13 +29,9 @@ exports.register = async (req, res) => {
     const newUser = await prisma.user.create({
       data: {
         email,
-        username,
+        name,
         password: hashedPassword,
-        user_roles: {
-          create: {
-            role_id: Number(role_id), // Tạo mqh cho bảng trung gian
-          },
-        },
+        role,
       },
     });
 
@@ -54,7 +50,7 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { username, email, password, user_roles } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Kiểm tra đầu vào
     if (!email || !password)
@@ -65,13 +61,6 @@ exports.login = async (req, res) => {
     // Kiểm tra email
     const user = await prisma.user.findUnique({
       where: { email },
-      include: {
-        user_roles: {
-          include: {
-            role: true,
-          },
-        },
-      },
     });
 
     if (!user)
@@ -82,12 +71,11 @@ exports.login = async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Sai email hoặc mật khẩu" });
 
-    const roleArr = user.user_roles.map((ur) => ur.role.name);
     const token = jwt.sign(
       {
-        id: user.user_id,
+        id: user.id,
         email: user.email,
-        role: roleArr,
+        role: user.role,
       },
       process.env.JWT_SECRET,
       {
