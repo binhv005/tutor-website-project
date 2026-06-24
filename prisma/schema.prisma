@@ -160,8 +160,7 @@ model Application {
   class_id Int
   class    Class @relation(fields: [class_id], references: [id])
   
-  status   Status @default(PENDING) // Sửa từ 'enum'
-
+  status   Status @default(PENDING) 
   tutor_id Int
   tutor    User @relation(fields: [tutor_id], references: [id])
   

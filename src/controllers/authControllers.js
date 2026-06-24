@@ -89,3 +89,50 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Lỗi server" });
   }
 };
+
+exports.createClass = (req, res) => {
+  // 1. Bóc tách đầy đủ các trường bắt buộc của một lớp học dựa trên Schema
+  const { require, subject, grade, area, tuition, parent_name, parent_phone } =
+    req.body;
+
+  try {
+    // 2. Kiểm tra dữ liệu đầu vào (Validation) - Thiếu trường nào chặn lại ngay
+    if (
+      !require ||
+      !subject ||
+      !grade ||
+      !area ||
+      !tuition ||
+      !parent_name ||
+      !parent_phone
+    ) {
+      return res.status(400).json({
+        msg: "Failed",
+        error: "Vui lòng nhập đầy đủ các trường bắt buộc!",
+      });
+    }
+
+    // 3. Giả lập tạo thành công (Ở Day 6 bạn sẽ thay đoạn này bằng câu lệnh Prisma)
+    return res.status(201).json({
+      msg: "Success",
+      data: {
+        require,
+        subject,
+        grade,
+        area,
+        tuition,
+        parent_name,
+        parent_phone,
+        status: "AVAILABLE",
+        created_by: req.user.id, // Lấy từ authMiddleware truyền sang
+      },
+    });
+  } catch (error) {
+    // 4. Bắt lỗi hệ thống nếu code chạy bị crash
+    console.error(error);
+    return res.status(500).json({
+      msg: "Failed",
+      error: "Lỗi server hệ thống!",
+    });
+  }
+};
