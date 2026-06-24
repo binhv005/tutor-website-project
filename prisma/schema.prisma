@@ -50,9 +50,10 @@ model User {
   name       String
   email      String        @unique
   password   String
-  role       Role 
+  role       Role
   profile    Profile?
-  classes    Class[]
+  
+  createdClasses   Class[]       @relation("AdminCreateClass")
   
   // Quan hệ với bảng Message (gửi và nhận)
   sentMessages     Message[] @relation("SentMessages")
@@ -94,16 +95,19 @@ model Class {
   grade           String        
   area            String         
   weekly_sessions String         
-  tuition         String         
+  tuition         Int         
   students        String       
   status          ClassStatus    
   note            String?        
   
+  parent_name     String
+  parent_phone    String
+
   applications    Application[]
 
-  tutor_id Int
-  tutor    User @relation(fields: [tutor_id], references: [id], onDelete: Cascade)
-
+  created_by      Int
+  admin           User          @relation("AdminCreateClass", fields: [created_by], references: [id], onDelete: Cascade)
+  
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
@@ -169,6 +173,6 @@ model Contact {
   id         Int      @id @default(autoincrement())
   name       String  
   phone      String  
-  content    String  
+  content    String 
   created_at DateTime @default(now())
 }
