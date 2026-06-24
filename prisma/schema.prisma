@@ -50,7 +50,7 @@ model User {
   name       String
   email      String        @unique
   password   String
-  role       Role 
+  role       Role
   profile    Profile?
   classes    Class[]
   
@@ -169,6 +169,6 @@ model Contact {
   id         Int      @id @default(autoincrement())
   name       String  
   phone      String  
-  content    String  
+  content    String 
   created_at DateTime @default(now())
 }
