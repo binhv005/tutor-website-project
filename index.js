@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 const authRoute = require("./src/routes/authRoutes");
+const classRoute = require("./src/routes/classRoutes");
 app.use(express.json());
 
 app.use("/api/auth", authRoute);
-
+app.use("/api/classes", classRoute);
 const PORT = process.env.PORT || 5050;
 
 app.listen(PORT, () => {

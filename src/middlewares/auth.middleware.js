@@ -1,13 +1,12 @@
 const jwt = require("jsonwebtoken");
-// 1.
 //  lấy token từ header
 const authorize = (req, res, next) => {
   const authHeader = req.headers.authorization;
   // kiểm tra có gửi token không
   if (!authHeader || !authHeader.startsWith("Bearer "))
-    return res.status(401).json({ message: "User khong gui token" });
+    return res.status(401).json({ message: "Người dùng không gửi token" });
 
-  // giai ma token
+  // giải mã token
   const token = authHeader.split(" ")[1];
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -15,7 +14,7 @@ const authorize = (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
-    res.status(401).json({ msg: "Loi server" });
+    res.status(401).json({ msg: "Lỗi server" });
   }
 };
 
@@ -24,10 +23,10 @@ const checkRole = (allowedRole) => {
     const role = req.user.role;
     try {
       if (allowedRole.includes(role)) return next();
-      else return res.status(403).json({ msg: "Ban khong co quyen truy cap" });
+      else return res.status(403).json({ msg: "Bạn không có quyền truy cập" });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ msg: "Loi server" });
+      res.status(500).json({ msg: "Lỗi server" });
     }
   };
 };

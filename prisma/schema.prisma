@@ -97,7 +97,7 @@ model Class {
   weekly_sessions String         
   tuition         Int         
   students        String       
-  status          ClassStatus    
+  status          ClassStatus   @default(AVAILABLE)
   note            String?        
   
   parent_name     String
