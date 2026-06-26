@@ -69,3 +69,53 @@ exports.getClasses = async (req, res) => {
     res.status(500).json({ msg: "Lỗi server" });
   }
 };
+
+exports.applyClass = async (req, res) => {
+  try {
+    const classCheck = await prisma.class.findUnique({
+      where: {
+        id: parseInt(req.params.id),
+      },
+    });
+    if (!classCheck || classCheck.status !== "AVAILABLE")
+      return res.status(400).json({ msg: "Lớp đã có gia sư" });
+    const appliedClass = await prisma.application.create({
+      data: {
+        tutor_id: req.user.id,
+        class_id: parseInt(req.params.id),
+      },
+    });
+    res.status(200).json({ msg: "Đang chờ duyệt đăng ký" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "Lỗi server" });
+  }
+};
+
+exports.updateApplies = async (req, res) => {
+  const { action } = req.body;
+  try {
+    if (action === "reject") {
+      const rejectApply = await prisma.application.update({
+        where: {
+          id: parseInt(req.params.id),
+        },
+        data: { status: "REJECT" },
+      });
+      res.status(200).json({ msg: "Yêu cầu đăng ký đã bị từ chối" });
+    }
+
+    if (action === "accept") {
+      const acceptApply = await prisma.application.update({
+        where: {
+          id: parseInt(req.params.id),
+        },
+        data: { status: "ACCEPT" },
+      });
+      res.status(200).json({ msg: "Yêu cầu đăng ký đã được chấp nhận" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "Lỗi server" });
+  }
+};
