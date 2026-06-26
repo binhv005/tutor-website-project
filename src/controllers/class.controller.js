@@ -22,18 +22,31 @@ exports.createClass = async (req, res) => {
 };
 
 exports.getClasses = async (req, res) => {
-  const {
-    status,
-    created_by,
-    parent_name,
-    parent_phone,
-    created_at,
-    updated_at,
-    ...classData
-  } = req.query;
+  const { subject, grade, area, status } = req.query;
+  const whereConditions = {};
+  if (subject) {
+    where: {
+      whereConditions.subject = subject;
+    }
+  }
+  if (grade) {
+    where: {
+      whereConditions.grade = grade;
+    }
+  }
+  if (area) {
+    where: {
+      whereConditions.area = area;
+    }
+  }
+  if (status) {
+    where: {
+      whereConditions.status = status;
+    }
+  }
   try {
     const listClass = await prisma.class.findMany({
-      where: classData,
+      where: whereConditions,
       select: {
         id: true,
         require: true,
@@ -47,8 +60,9 @@ exports.getClasses = async (req, res) => {
         note: true,
       },
     });
+
     if (listClass.length === 0)
-      return res.status(400).json({ msg: "Hiện tại chưa có lớp cần gia sư" });
+      return res.status(400).json({ msg: "Không tìm thấy lớp" });
     else return res.send(listClass);
   } catch (error) {
     console.log(error);
