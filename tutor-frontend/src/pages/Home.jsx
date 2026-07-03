@@ -6,18 +6,16 @@ import study from "../assets/study.jpg";
 import national from "../assets/national.jpg";
 import {
   faStar,
-  faAward,
   faUsers,
   faUserGraduate,
   faCheck,
   faWebAwesome,
-  faShieldHalved,
-  faHeadset,
 } from "@fortawesome/free-solid-svg-icons";
 import teaching from "../assets/teaching.jpg";
 import StatCard from "../components/StatCard";
 import ServiceCard from "../components/ServiceCard";
 import FeedbackCard from "../components/FeedbackCard";
+import ContactCard from "../components/ContactCard";
 import { text } from "@fortawesome/fontawesome-svg-core";
 
 function Home() {
@@ -101,21 +99,6 @@ function Home() {
     },
   ];
 
-  const commit = [
-    {
-      icon: faShieldHalved,
-      text: "Bảo mật thông tin 100%",
-    },
-    {
-      icon: faHeadset,
-      text: "Hỗ trợ 24/24",
-    },
-    {
-      icon: faCheck,
-      text: "Hơn 15 năm uy tín",
-    },
-  ];
-
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 px-5 py-10">
@@ -184,39 +167,7 @@ function Home() {
         </p>
         <FeedbackCard data={feedbackData} />
       </div>
-
-      <div className="px-5 py-20 bg-tertiary ">
-        <div className="text-center text-white">
-          <p className="mb-5">
-            Bạn Sẵn Sàng Để Con <span className="text-secondary">Bứt Phá</span>{" "}
-            Ngay Hôm Nay?
-          </p>
-          <p className="mb-5">
-            Để lại thông tin để nhận buổi tư vấn lộ trình học tập miễn phí trị
-            giá 500,000 VNĐ dành cho 50 người đăng ký sớm nhất trong tháng.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 py-5">
-          <input
-            type="text"
-            placeholder="Số điện thoại của bạn"
-            className="bg-white px-3 py-5 rounded-xl"
-          />
-          <button className="bg-primary text-white rounded-xl px-3 py-5 hover:bg-red-600`">
-            Đăng Ký Tư Vấn Ngay
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 lg:ml-50 gap-5">
-          {commit.map((item, index) => (
-            <div key={index} className="flex items-center gap-3">
-              <FontAwesomeIcon icon={item.icon} className="text-secondary" />
-              <p className="text-white">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ContactCard />
     </div>
   );
 }
