@@ -38,7 +38,7 @@ function Header() {
   ];
 
   return (
-    <header className="flex justify-between bg-neutral p-3 px-5">
+    <header className="sticky top-0 z-50 flex justify-between bg-neutral p-3 px-5 ">
       <div className="flex items-center">
         <img src={tutorLogo} alt="logo" className="w-20" />
         <p className="text-primary font-bold">Trung tâm gia sư Đỗ Hằng</p>

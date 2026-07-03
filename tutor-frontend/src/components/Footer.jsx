@@ -41,7 +41,7 @@ function Footer() {
   ];
 
   return (
-    <footer className="bg-neutral px-8">
+    <footer className="bg-neutral px-5 py-10">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div>
           <div className="flex items-center">
