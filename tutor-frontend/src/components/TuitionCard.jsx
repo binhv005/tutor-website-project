@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faC, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 function TuitionCard() {
   const gradeData = [
     {
+      id: 1,
       level: "CẤP TIỂU HỌC",
       grade: "Lớp 1 - Lớp 5",
       tuition: "120k",
@@ -21,6 +22,7 @@ function TuitionCard() {
       ],
     },
     {
+      id: 2,
       level: "CẤP TRUNG HỌC",
       grade: "Lớp 6 - Lớp 9",
       tuition: "180k",
@@ -41,6 +43,7 @@ function TuitionCard() {
       ],
     },
     {
+      id: 3,
       level: "CẤP PHỔ THÔNG",
       grade: "Lớp 10 - Lớp 12",
       tuition: "250k",
@@ -58,6 +61,7 @@ function TuitionCard() {
       ],
     },
     {
+      id: 4,
       level: "NGOẠI NGỮ - NĂNG KHIẾU",
       grade: "Mọi lứa tuổi (Trẻ em - Người lớn)",
       tuition: "120k",
@@ -78,10 +82,10 @@ function TuitionCard() {
 
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-      {gradeData.map((item, index) => (
+      {gradeData.map((item) => (
         <div
-          key={index}
-          className="flex flex-col gap-3 bg-white rounded-lg border-headline border-1 p-3 transition duration-300 hover:border-primary hover:scale-105"
+          key={item.id}
+          className="flex flex-col gap-3 bg-white rounded-lg border-headline border p-3 transition duration-300 hover:border-primary hover:scale-105"
         >
           <div className="flex flex-col gap-3">
             <p className="text-tertiary font-bold">{item.level}</p>
@@ -94,10 +98,10 @@ function TuitionCard() {
             </div>
             <p className="text-headline italic">{item.desc}</p>
           </div>
-          {item.detail.map((item, index) => (
-            <div key={index} className="flex items-center gap-3">
+          {item.detail.map((info) => (
+            <div key={info.text} className="flex items-center gap-3">
               <FontAwesomeIcon icon={faCheck} className="text-tertiary" />
-              <p>{item.text}</p>
+              <p>{info.text}</p>
             </div>
           ))}
           <button className="bg-primary text-white font-bold text-center p-3 w-40 m-auto hover:bg-red-600">
