@@ -7,23 +7,28 @@ import {
   faGraduationCap,
   faCheck,
   faMoneyBill,
+  faShieldHalved,
+  faHeadset,
 } from "@fortawesome/free-solid-svg-icons";
 
 function TuitionPage() {
   const commit = [
     {
+      id: 1,
       logo: faCheck,
       title: "Hợp đồng rõ ràng",
       desc: "Mọi thỏa thuận về học phí, thời gian và lộ trình học tập đều được ký kết văn bản để đảm bảo quyền lợi của phụ huynh.",
       style: "text-white bg-primary ",
     },
     {
+      id: 2,
       logo: faMoneyBill,
       title: "Không phí phát sinh",
       desc: "Trung tâm cam kết không thu thêm bất kỳ khoản phí môi giới hay tư vấn nào ngoài mức học phí đã công bố.",
       style: "text-white bg-tertiary",
     },
     {
+      id: 3,
       logo: faGraduationCap,
       title: "Đảm bảo tiến bộ",
       desc: "Hoàn trả học phí hoặc thay đổi gia sư miễn phí nếu học sinh không cải thiện kết quả học tập sau tháng đầu tiên.",
@@ -54,14 +59,31 @@ function TuitionPage() {
       id: 4,
       question: " Học phí gia sư giáo viên khác gia sư sinh viên như thế nào?",
       answer:
-        "Phụ huynh có thể lựa chọn thanh toán theo buổi học hoặc thanh toán theo tháng (vào cuối mỗi tháng). Trung tâm khuyến khích thanh toán theo tháng để dễ dàng quản lý và nhận các ưu đãi.",
+        "Mức phí cho gia sư là giáo viên đang đứng lớp thường cao hơn khoảng 50% - 100% so với gia sư sinh viên, tùy thuộc vào thâm niên và chuyên môn của giáo viên đó.",
     },
   ];
 
+  const commitContact = [
+    {
+      id: 1,
+      icon: faShieldHalved,
+      text: "Bảo mật thông tin 100%",
+    },
+    {
+      id: 2,
+      icon: faHeadset,
+      text: "Hỗ trợ 24/24",
+    },
+    {
+      id: 3,
+      icon: faCheck,
+      text: "Hơn 15 năm uy tín",
+    },
+  ];
   return (
     <div className="px-5 py-10  bg-neutral">
       <div className="flex flex-col gap-5 text-center text-headline py-5">
-        <p className="text-primary font-bold bg-red-100 rounded-2xl w-50 text-center m-auto p-1">
+        <p className="text-primary font-bold bg-red-100 rounded-2xl w-48 text-center m-auto p-1">
           ĐẦU TƯ VÀO KIẾN THỨC
         </p>
         <h1 className="font-bold text-2xl text-center">
@@ -74,13 +96,13 @@ function TuitionPage() {
       </div>
       <TuitionCard />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 py-10">
-        <img src={discuss} alt="discuss" />
+        <img src={discuss} alt="Thảo luận" />
         <div className="flex flex-col gap-3">
           <h1 className="font-bold text-4xl py-5">
             Cam Kết Chất Lượng & Minh Bạch
           </h1>
-          {commit.map((item, index) => (
-            <div key={index} className="flex gap-4">
+          {commit.map((item) => (
+            <div key={item.id} className="flex gap-4">
               <FontAwesomeIcon
                 icon={item.logo}
                 className={`p-2 rounded-lg mt-2 ${item.style}`}
@@ -95,13 +117,13 @@ function TuitionPage() {
       </div>
 
       <div className="py-10">
-        <h1 className="font-bold text-3xl text-center">
+        <h1 className="font-bold text-3xl text-center py-5">
           Câu Hỏi Thường Gặp Về Thanh Toán
         </h1>
         <PayQCard data={QA} />
       </div>
 
-      <ContactCard />
+      <ContactCard data={commitContact} />
     </div>
   );
 }
