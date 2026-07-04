@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 function ContactCard({ data }) {
   return (
@@ -14,15 +15,15 @@ function ContactCard({ data }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 py-5">
-        <input
-          type="text"
-          name="phoneInput"
-          placeholder="Số điện thoại của bạn"
-          className="bg-white px-3 py-5 rounded-xl"
-        />
-        <button className="bg-primary text-white rounded-xl px-3 py-5 hover:bg-red-600">
-          Đăng Ký Tư Vấn Ngay
+        <button className="text-white border border-white rounded-xl px-3 py-5 hover:bg-white hover:text-tertiary">
+          Gọi hotline: 09x.xxx.xxx
         </button>
+        <Link
+          to="/parents"
+          className="flex justify-center bg-primary text-white rounded-xl px-3 py-5 hover:bg-red-600"
+        >
+          Đăng Ký Tư Vấn Ngay
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:max-w-screen-md lg:mx-auto gap-5">

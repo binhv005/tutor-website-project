@@ -75,7 +75,7 @@ const serviceData = [
     desc: "Luyện thi cấp tốc, bám sát cấu trúc đề thi chính thức. Cam kết đầu ra tại các trường top đầu.",
     btnText: "Đăng ký tư vấn miễn phí",
     btnStyle: "bg-white text-primary text-bold rounded-xl",
-    path: "/contacts",
+    path: "/parents",
   },
   {
     id: 4,
@@ -85,7 +85,7 @@ const serviceData = [
     desc: "Học cùng gia sư bản ngữ hoặc gia sư 8.0+ IELTS.",
     btnText: "Đăng ký ngay",
     btnStyle: " text-white text-bold border-b-3",
-    path: "/contacts",
+    path: "/parents",
   },
 ];
 
@@ -151,12 +151,18 @@ function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 w-fit gap-2 lg:grid-cols-2 ">
-            <button className="bg-primary  rounded-lg text-white font-bold w-40 h-12 transition-transform duration-300 hover:scale-110">
+            <Link
+              to="/parents"
+              className="flex justify-center items-center w-48 h-12 bg-primary rounded-lg text-white font-bold transition-transform duration-300 hover:scale-110"
+            >
               Tìm gia sư ngay
-            </button>
-            <button className="border-2 border-tertiary rounded-lg text-tertiary w-40 h-12 font-bold hover:text-white hover:bg-tertiary">
+            </Link>
+            <Link
+              to="services"
+              className="flex justify-center items-center w-48 h-12 border-2 border-tertiary rounded-lg text-tertiary font-bold hover:text-white hover:bg-tertiary"
+            >
               Xem lộ trình học
-            </button>
+            </Link>
           </div>
         </div>
         <img

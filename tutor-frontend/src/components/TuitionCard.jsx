@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 function TuitionCard() {
   const gradeData = [
@@ -104,9 +105,12 @@ function TuitionCard() {
               <p>{info.text}</p>
             </div>
           ))}
-          <button className="bg-primary text-white font-bold text-center p-3 w-40 m-auto hover:bg-red-600">
+          <Link
+            to="/parents"
+            className="bg-primary text-white font-bold text-center p-3 w-40 m-auto hover:bg-red-600"
+          >
             Đăng Ký Ngay
-          </button>
+          </Link>
         </div>
       ))}
     </div>

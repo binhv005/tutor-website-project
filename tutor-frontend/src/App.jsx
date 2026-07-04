@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import ServicePage from "./pages/ServicePage";
 import TuitionPage from "./pages/TuitionPage";
 import ScrollToTop from "./components/ScrollToTop";
+import ParentPage from "./pages/ParentPage";
+import TutorPage from "./pages/TutorPage";
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +15,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="tuitions" element={<TuitionPage />} />
           <Route path="services" element={<ServicePage />} />
+          <Route path="parents" element={<ParentPage />} />
+          <Route path="tutors" element={<TutorPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
