@@ -16,9 +16,9 @@ function ServiceCard({ data }) {
 
       <div className="relative z-10 flex flex-col items-start text-white">
         <div className="flex gap-2 mb-3">
-          {data.badges.map((badge, index) => (
+          {data.badges.map((badge) => (
             <span
-              key={index}
+              key={badge}
               className="bg-yellow-400 text-black text-xs font-bold px-2.5 py-1 rounded"
             >
               {badge}
@@ -31,14 +31,12 @@ function ServiceCard({ data }) {
           {data.desc}
         </p>
 
-        <p>
-          <Link
-            to={data.path}
-            className={`w-40 p-2.5 transition-all duration-200 font-bold ${data.btnStyle}`}
-          >
-            {data.btnText}
-          </Link>
-        </p>
+        <Link
+          to={data.path}
+          className={`p-2.5 transition-all duration-200 font-bold ${data.btnStyle}`}
+        >
+          {data.btnText}
+        </Link>
       </div>
     </div>
   );

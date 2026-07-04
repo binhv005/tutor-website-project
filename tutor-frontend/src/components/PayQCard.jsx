@@ -5,29 +5,24 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 function PayQCard({ data }) {
   const [openId, setOpenId] = useState(null);
   const handleToggle = (id) => {
-    if (openId === id) {
-      setOpenId(null);
-    } else {
-      setOpenId(id);
-    }
+    setOpenId(openId === id ? null : id);
   };
   return (
-    <div>
-      {data.map((item, id) => (
+    <div className="grid grid-cols-1 gap-3 ">
+      {data.map((item) => (
         <div
           key={item.id}
-          className=" bg-white border-1 border-headline rounded-lg p-4"
+          className="bg-white border border-headline rounded-lg p-4"
         >
-          <h1 className="flex items-center justify-between ">
-            <button
-              onClick={() => handleToggle(item.id)}
-              className="font-bold "
-            >
-              {item.question}
-            </button>
+          <button
+            onClick={() => handleToggle(item.id)}
+            className="font-bold cursor-pointer flex items-center justify-between w-full"
+          >
+            <span>{item.question}</span>
             <FontAwesomeIcon icon={faAngleDown} />
-          </h1>
-          {openId && (
+          </button>
+
+          {openId === item.id && (
             <div>
               <hr className="my-2" />
               <p className="text-headline "> {item.answer}</p>
