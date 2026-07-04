@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PublicLayout from "./layouts/PublicLayout";
 import Home from "./pages/Home";
+import ServicePage from "./pages/ServicePage";
 import TuitionPage from "./pages/TuitionPage";
 import ScrollToTop from "./components/ScrollToTop";
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Home />} />
           <Route path="tuitions" element={<TuitionPage />} />
+          <Route path="services" element={<ServicePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
