@@ -1,8 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCheck,
-  faShieldHalved,
-  faHeadset,
   faFaceSmile,
   faGraduationCap,
   faAward,
@@ -11,24 +7,6 @@ import {
 import ContactCard from "../components/ContactCard";
 import { Link } from "react-router-dom";
 import DetailServiceCard from "../components/DetailServiceCard";
-
-const commitContact = [
-  {
-    id: 1,
-    icon: faShieldHalved,
-    text: "Bảo mật thông tin 100%",
-  },
-  {
-    id: 2,
-    icon: faHeadset,
-    text: "Hỗ trợ 24/24",
-  },
-  {
-    id: 3,
-    icon: faCheck,
-    text: "Hơn 15 năm uy tín",
-  },
-];
 
 const aimData = [
   {
@@ -226,7 +204,7 @@ function ServicePage() {
           ))}
         </div>
       </div>
-      <ContactCard data={commitContact} />
+      <ContactCard />
     </div>
   );
 }

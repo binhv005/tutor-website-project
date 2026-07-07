@@ -10,8 +10,6 @@ import {
   faUserGraduate,
   faCheck,
   faWebAwesome,
-  faShieldHalved,
-  faHeadset,
 } from "@fortawesome/free-solid-svg-icons";
 import teaching from "../assets/teaching.jpg";
 import StatCard from "../components/StatCard";
@@ -110,24 +108,6 @@ const feedbackData = [
   },
 ];
 
-const commitContact = [
-  {
-    id: 1,
-    icon: faShieldHalved,
-    text: "Bảo mật thông tin 100%",
-  },
-  {
-    id: 2,
-    icon: faHeadset,
-    text: "Hỗ trợ 24/24",
-  },
-  {
-    id: 3,
-    icon: faCheck,
-    text: "Hơn 15 năm uy tín",
-  },
-];
-
 function Home() {
   return (
     <div>
@@ -203,7 +183,7 @@ function Home() {
         </p>
         <FeedbackCard data={feedbackData} />
       </div>
-      <ContactCard data={commitContact} />
+      <ContactCard />
     </div>
   );
 }

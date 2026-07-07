@@ -61,24 +61,6 @@ const QA = [
   },
 ];
 
-const commitContact = [
-  {
-    id: 1,
-    icon: faShieldHalved,
-    text: "Bảo mật thông tin 100%",
-  },
-  {
-    id: 2,
-    icon: faHeadset,
-    text: "Hỗ trợ 24/24",
-  },
-  {
-    id: 3,
-    icon: faCheck,
-    text: "Hơn 15 năm uy tín",
-  },
-];
-
 function TuitionPage() {
   return (
     <div className="px-5 py-10  bg-neutral">
@@ -123,7 +105,7 @@ function TuitionPage() {
         <PayQCard data={QA} />
       </div>
 
-      <ContactCard data={commitContact} />
+      <ContactCard />
     </div>
   );
 }
