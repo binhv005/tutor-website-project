@@ -6,6 +6,7 @@ import TuitionPage from "./pages/TuitionPage";
 import ScrollToTop from "./components/ScrollToTop";
 import ParentPage from "./pages/ParentPage";
 import TutorPage from "./pages/TutorPage";
+import LoginPage from "./pages/LoginPage";
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ function App() {
           <Route path="parents" element={<ParentPage />} />
           <Route path="tutors" element={<TutorPage />} />
         </Route>
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
