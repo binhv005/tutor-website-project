@@ -158,15 +158,15 @@ function TutorPage() {
                 nghìn lớp học chất lượng cao và nhận mức thu nhập hấp dẫn.
               </p>
               <ul className="space-y-3 mb-8 text-sm">
-                <li class="flex items-center gap-3">
+                <li className="flex items-center gap-3">
                   <i className="fas fa-check-circle text-secondary"></i>
                   <span>Phí nhận lớp ưu đãi</span>
                 </li>
-                <li class="flex items-center gap-3">
+                <li className="flex items-center gap-3">
                   <i className="fas fa-check-circle text-secondary"></i>
                   <span>Hỗ trợ giáo trình dạy</span>
                 </li>
-                <li class="flex items-center gap-3">
+                <li className="flex items-center gap-3">
                   <i className="fas fa-check-circle text-secondary"></i>
                   <span>Thanh toán minh bạch</span>
                 </li>
