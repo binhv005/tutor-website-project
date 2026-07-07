@@ -1,38 +1,10 @@
 function JobCard({ job }) {
-  const renderBadge = (status) => {
-    switch (status) {
-      case "Mới đăng":
-        return (
-          <span className="bg-secondary text-slate-900 px-3 py-1 rounded-full text-xs font-semibold">
-            Mới đăng
-          </span>
-        );
-      case "Cần gấp":
-        return (
-          <span className="bg-red-100 text-primary px-3 py-1 rounded-full text-xs font-semibold">
-            Cần gấp
-          </span>
-        );
-      default:
-        return (
-          <span className="bg-slate-200 text-slate-700 px-3 py-1 rounded-full text-xs font-semibold">
-            {status}
-          </span>
-        );
-    }
-  };
-
   return (
     <div className="bg-white border border-slate-200 p-6 rounded-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-lg group cursor-pointer relative overflow-hidden active:scale-[0.98]">
       <div className="absolute top-0 left-0 w-1 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
         <div className="space-y-4 flex-1">
-          <div className="flex items-center gap-3">
-            {renderBadge(job.status)}
-            <span className="text-headline text-xs font-medium">
-              Mã lớp: {job.code}
-            </span>
-          </div>
+          <span className="text-headline font-medium">Mã lớp: {job.code}</span>
           <h3 className="text-xl font-bold text-tertiary">{job.title}</h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6">
@@ -60,9 +32,6 @@ function JobCard({ job }) {
             <div className="text-xs text-slate-500">Mức lương / tháng</div>
             <div className="text-xl font-bold text-primary">{job.salary}</div>
           </div>
-          <button className="bg-tertiary text-white px-6 py-2 rounded-lg text-sm font-semibold w-full hover:bg-blue-700 transition-all cursor-pointer">
-            Nhận lớp
-          </button>
         </div>
       </div>
     </div>

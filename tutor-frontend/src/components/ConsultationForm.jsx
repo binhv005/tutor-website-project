@@ -39,13 +39,13 @@ export default function ConsultationForm() {
             placeholder="Nguyễn Văn A"
             className="w-full bg-neutral px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm"
             value={formData.name}
-            onChange={function (e) {
+            onChange={(e) => {
               setFormData({ ...formData, name: e.target.value });
             }}
-            onFocus={function () {
+            onFocus={() => {
               setFocusedField("name");
             }}
-            onBlur={function () {
+            onBlur={() => {
               setFocusedField(null);
             }}
             required
@@ -60,13 +60,13 @@ export default function ConsultationForm() {
             placeholder="090x xxx xxx"
             className="w-full bg-neutral px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm"
             value={formData.phone}
-            onChange={function (e) {
+            onChange={(e) => {
               setFormData({ ...formData, phone: e.target.value });
             }}
-            onFocus={function () {
+            onFocus={() => {
               setFocusedField("phone");
             }}
-            onBlur={function () {
+            onBlur={() => {
               setFocusedField(null);
             }}
             required
@@ -78,13 +78,13 @@ export default function ConsultationForm() {
             <select
               className="w-full bg-neutral px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm appearance-none"
               value={formData.grade}
-              onChange={function (e) {
+              onChange={(e) => {
                 setFormData({ ...formData, grade: e.target.value });
               }}
-              onFocus={function () {
+              onFocus={() => {
                 setFocusedField("grade");
               }}
-              onBlur={function () {
+              onBlur={() => {
                 setFocusedField(null);
               }}
             >
@@ -101,13 +101,13 @@ export default function ConsultationForm() {
               placeholder="Toán, Anh..."
               className="w-full bg-neutral px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm"
               value={formData.subject}
-              onChange={function (e) {
+              onChange={(e) => {
                 setFormData({ ...formData, subject: e.target.value });
               }}
-              onFocus={function () {
+              onFocus={() => {
                 setFocusedField("subject");
               }}
-              onBlur={function () {
+              onBlur={() => {
                 setFocusedField(null);
               }}
             />

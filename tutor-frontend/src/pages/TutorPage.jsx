@@ -61,6 +61,18 @@ function TutorPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-end">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-headline block">
+              Yêu cầu
+            </label>
+            <select className="w-full bg-neutral border border-slate-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm">
+              <option>Tất cả yêu cầu</option>
+              <option>Sinh viên</option>
+              <option>Giáo viên đứng lớp</option>
+              <option>Giáo viên tự do</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-headline block">
               Môn học
             </label>
             <select className="w-full bg-neutral border border-slate-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm">
@@ -98,22 +110,6 @@ function TutorPage() {
             </select>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-headline block">
-              Mức lương tối thiểu
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                className="w-full bg-neutral border border-slate-300 rounded-lg pl-4 pr-10 py-2.5 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm"
-                placeholder="Ví dụ: 2,000,000"
-              />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-headline text-xs font-bold">
-                đ
-              </span>
-            </div>
-          </div>
-
           <button className="bg-tertiary text-white h-[46px] rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors cursor-pointer">
             <i className="fas fa-search"></i>
             Tìm kiếm
@@ -126,26 +122,6 @@ function TutorPage() {
           {jobsData.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
-
-          <div className="flex justify-center pt-8">
-            <nav className="flex items-center gap-2">
-              <button className="w-10 h-10 rounded border border-slate-300 flex items-center justify-center hover:bg-slate-200 transition-colors cursor-pointer">
-                <i className="fas fa-chevron-left text-sm"></i>
-              </button>
-              <button className="w-10 h-10 rounded bg-primary text-white flex items-center justify-center font-bold text-sm">
-                1
-              </button>
-              <button className="w-10 h-10 rounded border border-slate-300 flex items-center justify-center hover:bg-slate-200 transition-colors cursor-pointer text-sm">
-                2
-              </button>
-              <button className="w-10 h-10 rounded border border-slate-300 flex items-center justify-center hover:bg-slate-200 transition-colors cursor-pointer text-sm">
-                3
-              </button>
-              <button className="w-10 h-10 rounded border border-slate-300 flex items-center justify-center hover:bg-slate-200 transition-colors cursor-pointer">
-                <i className="fas fa-chevron-right text-sm"></i>
-              </button>
-            </nav>
-          </div>
         </div>
 
         <div className="space-y-8">

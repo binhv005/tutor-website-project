@@ -9,18 +9,18 @@ const menuItems = [
   { id: 2, path: "/services", text: "Dịch vụ" },
   { id: 3, path: "/tuitions", text: "Học phí" },
   { id: 4, path: "/parents", text: "Phụ huynh" },
-  { id: 5, path: "/tutors", text: "Gia sư" },
-  { id: 6, path: "/tutors-register", text: "Đăng Ký Làm Gia sư" },
+  { id: 5, path: "/tutors", text: "Lớp hiện có" },
+  { id: 6, path: "/tutors-register", text: "Đăng ký làm gia sư" },
 ];
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between bg-neutral px-4 py-4 shadow-lg md:px-10">
-      <div className="flex items-center gap-2">
+    <header className="sticky top-0 z-50 flex items-center justify-between bg-neutral px-4 py-4 text-sm shadow-lg md:px-10">
+      <div className="flex items-center gap-2 ">
         <img src={tutorLogo} alt="logo" className="w-14 md:w-20" />
-        <p className="text-primary font-bold text-sm md:text-base">
+        <p className="text-primary font-bold  md:text-base">
           Trung tâm gia sư Đỗ Hằng
         </p>
       </div>
