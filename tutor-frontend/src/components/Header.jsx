@@ -30,6 +30,11 @@ const menuItems = [
     path: "/tutors",
     text: "Dành Cho Gia sư",
   },
+  {
+    id: 5,
+    path: "/tutors-register",
+    text: "Đăng Ký Làm Gia sư",
+  },
 ];
 
 function Header() {
