@@ -10,7 +10,6 @@ const menuItems = [
   { id: 3, path: "/tuitions", text: "Học phí" },
   { id: 4, path: "/parents", text: "Phụ huynh" },
   { id: 5, path: "/tutors", text: "Lớp hiện có" },
-  { id: 6, path: "/tutors-register", text: "Đăng ký làm gia sư" },
 ];
 
 function Header() {
@@ -43,12 +42,6 @@ function Header() {
             className="text-headline font-bold transition-all hover:text-primary"
           >
             Đăng nhập
-          </Link>
-          <Link
-            to="/register"
-            className="bg-primary text-white font-bold px-4 py-2 rounded-lg transition-all hover:bg-primary/80"
-          >
-            Đăng ký
           </Link>
         </div>
       </div>
