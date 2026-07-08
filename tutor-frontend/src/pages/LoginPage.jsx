@@ -35,11 +35,8 @@ export default function LoginPage() {
           <div className="w-full max-w-md bg-white/95 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-xl shadow-sm border border-gray-200">
             <div className="mb-6 md:mb-8">
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-1.5">
-                Chào mừng trở lại
+                Dành cho Admin
               </h2>
-              <p className="text-gray-600 text-sm sm:text-base">
-                Vui lòng đăng nhập để tiếp tục hành trình học tập.
-              </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
@@ -126,13 +123,6 @@ export default function LoginPage() {
                 {isLoading ? "Đang xử lý..." : "Đăng nhập ngay"}
               </button>
             </form>
-
-            <p className="text-center text-xs sm:text-sm text-gray-600">
-              Chưa có tài khoản?{" "}
-              <Link to="/register" className="font-bold text-primary">
-                Đăng ký ngay
-              </Link>
-            </p>
           </div>
 
           <footer className="mt-8 md:mt-12 text-center text-gray-400 opacity-80">
