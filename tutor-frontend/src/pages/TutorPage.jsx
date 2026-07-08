@@ -1,4 +1,5 @@
 import JobCard from "../components/JobCard";
+import { useState } from "react";
 const jobsData = [
   {
     id: 1,
@@ -33,6 +34,39 @@ const jobsData = [
     requirement: "SV năm 3-4 chuyên ngành Sư phạm Lý",
     salary: "3.200.000đ",
   },
+  {
+    id: 5,
+    code: "DH2024-03",
+    status: "Đang xem xét",
+    title: "Vật Lý - Lớp 12 (Ôn thi ĐH)",
+    location: "Hẻm 45 Đinh Bộ Lĩnh, Bình Thạnh",
+    schedule: "3 buổi/tuần (T3-T5-T7)",
+    time: "19:30 - 21:00",
+    requirement: "SV năm 3-4 chuyên ngành Sư phạm Lý",
+    salary: "3.200.000đ",
+  },
+  {
+    id: 4,
+    code: "DH2024-03",
+    status: "Đang xem xét",
+    title: "Vật Lý - Lớp 12 (Ôn thi ĐH)",
+    location: "Hẻm 45 Đinh Bộ Lĩnh, Bình Thạnh",
+    schedule: "3 buổi/tuần (T3-T5-T7)",
+    time: "19:30 - 21:00",
+    requirement: "SV năm 3-4 chuyên ngành Sư phạm Lý",
+    salary: "3.200.000đ",
+  },
+  {
+    id: 6,
+    code: "DH2024-03",
+    status: "Đang xem xét",
+    title: "Vật Lý - Lớp 12 (Ôn thi ĐH)",
+    location: "Hẻm 45 Đinh Bộ Lĩnh, Bình Thạnh",
+    schedule: "3 buổi/tuần (T3-T5-T7)",
+    time: "19:30 - 21:00",
+    requirement: "SV năm 3-4 chuyên ngành Sư phạm Lý",
+    salary: "3.200.000đ",
+  },
 ];
 
 const popularTags = [
@@ -45,6 +79,21 @@ const popularTags = [
 ];
 
 function TutorPage() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentJobs = jobsData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(jobsData.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
   return (
     <div className="font-sans bg-neutral text-slate-800 p-4 md:p-8 max-w-7xl mx-auto space-y-12">
       <div>
@@ -119,9 +168,55 @@ function TutorPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          {jobsData.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
+          <div className="space-y-6">
+            {currentJobs.map((job) => (
+              <JobCard key={job.id} job={job} />
+            ))}
+          </div>
+          {
+            <div className="flex items-center justify-center gap-2 pt-4">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`w-9 h-9 rounded-lg border text-sm font-semibold flex items-center justify-center transition-colors ${
+                  currentPage === 1
+                    ? "text-slate-300 border-slate-200 cursor-not-allowed"
+                    : "text-slate-600 border-slate-300 hover:bg-slate-50 cursor-pointer"
+                }`}
+              >
+                Prev
+              </button>
+
+              {Array.from({ length: totalPages }, (_, index) => {
+                const pageNumber = index + 1;
+                return (
+                  <button
+                    key={pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                    className={`w-9 h-9 rounded-lg text-sm font-semibold flex items-center justify-center transition-colors cursor-pointer ${
+                      currentPage === pageNumber
+                        ? "bg-primary text-white border"
+                        : "text-slate-600 border border-slate-300 hover:bg-slate-50"
+                    }`}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              })}
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`w-9 h-9 rounded-lg border text-sm font-semibold flex items-center justify-center transition-colors ${
+                  currentPage === totalPages
+                    ? "text-slate-300 border-slate-200 cursor-not-allowed"
+                    : "text-slate-600 border-slate-300 hover:bg-slate-50 cursor-pointer"
+                }`}
+              >
+                Next
+              </button>
+            </div>
+          }
         </div>
 
         <div className="space-y-8">
@@ -148,7 +243,7 @@ function TutorPage() {
                 </li>
               </ul>
               <button className="bg-secondary text-slate-900 w-full py-3.5 rounded-lg font-bold hover:brightness-105 transition-all shadow-md cursor-pointer text-center text-sm uppercase">
-                Đăng ký gia sư ngay
+                Đăng ký ngay
               </button>
             </div>
           </div>
