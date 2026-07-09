@@ -7,6 +7,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ParentPage from "./pages/ParentPage";
 import TutorPage from "./pages/TutorPage";
 import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +21,7 @@ function App() {
           <Route path="tutors" element={<TutorPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/admin/dashboard" element={<DashboardPage />} />
       </Routes>
     </BrowserRouter>
   );
