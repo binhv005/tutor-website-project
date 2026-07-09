@@ -1,5 +1,6 @@
 import JobCard from "../components/JobCard";
 import { useState } from "react";
+import Pagination from "../components/Pagination";
 const jobsData = [
   {
     id: 1,
@@ -173,50 +174,11 @@ function TutorPage() {
               <JobCard key={job.id} job={job} />
             ))}
           </div>
-          {
-            <div className="flex items-center justify-center gap-2 pt-4">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className={`w-9 h-9 rounded-lg border text-sm font-semibold flex items-center justify-center transition-colors ${
-                  currentPage === 1
-                    ? "text-slate-300 border-slate-200 cursor-not-allowed"
-                    : "text-slate-600 border-slate-300 hover:bg-slate-50 cursor-pointer"
-                }`}
-              >
-                Prev
-              </button>
-
-              {Array.from({ length: totalPages }, (_, index) => {
-                const pageNumber = index + 1;
-                return (
-                  <button
-                    key={pageNumber}
-                    onClick={() => handlePageChange(pageNumber)}
-                    className={`w-9 h-9 rounded-lg text-sm font-semibold flex items-center justify-center transition-colors cursor-pointer ${
-                      currentPage === pageNumber
-                        ? "bg-primary text-white border"
-                        : "text-slate-600 border border-slate-300 hover:bg-slate-50"
-                    }`}
-                  >
-                    {pageNumber}
-                  </button>
-                );
-              })}
-
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className={`w-9 h-9 rounded-lg border text-sm font-semibold flex items-center justify-center transition-colors ${
-                  currentPage === totalPages
-                    ? "text-slate-300 border-slate-200 cursor-not-allowed"
-                    : "text-slate-600 border-slate-300 hover:bg-slate-50 cursor-pointer"
-                }`}
-              >
-                Next
-              </button>
-            </div>
-          }
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
 
         <div className="space-y-8">
