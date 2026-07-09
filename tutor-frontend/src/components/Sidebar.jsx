@@ -8,7 +8,6 @@ import {
 
 function Sidebar({ activeTab, setActiveTab }) {
   const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: faChartLine },
     { id: "class-manager", label: "Quản lý lớp học", icon: faGraduationCap },
     { id: "contact-manager", label: "Quản lý liên hệ", icon: faContactCard },
     { id: "change-password", label: "Đổi mật khẩu", icon: faLock },

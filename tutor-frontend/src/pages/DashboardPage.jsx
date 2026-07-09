@@ -1,5 +1,4 @@
 import Sidebar from "../components/Sidebar";
-import DashboardTab from "../components/DashboardTab";
 import ClassManagerTab from "../components/ClassManagerTab";
 import ContactManagerTab from "../components/ContactManagerTab";
 import ChangePasswordTab from "../components/ChangePasswordTab";
@@ -10,8 +9,6 @@ function DashboardPage() {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case "dashboard":
-        return <DashboardTab />;
       case "class-manager":
         return <ClassManagerTab />;
       case "contact-manager":
@@ -19,7 +16,7 @@ function DashboardPage() {
       case "change-password":
         return <ChangePasswordTab />;
       default:
-        return <DashboardTab />;
+        return <ClassManagerTab />;
     }
   };
 
