@@ -1,74 +1,7 @@
+import { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
-import { useState } from "react";
 import Pagination from "../components/Pagination";
-const jobsData = [
-  {
-    id: 1,
-    code: "DH2024-01",
-    status: "Mới đăng",
-    title: "Toán & Tiếng Việt - Lớp 3",
-    location: "Lê Văn Sỹ, Quận 3, TP.HCM",
-    schedule: "3 buổi/tuần (T2-T4-T6)",
-    time: "18:00 - 19:30",
-    requirement: "Nữ (SV Sư phạm ưu tiên)",
-    salary: "2.400.000đ",
-  },
-  {
-    id: 2,
-    code: "DH2024-02",
-    status: "Cần gấp",
-    title: "Tiếng Anh - Lớp 10 (Luyện thi)",
-    location: "Đường Phan Xích Long, Phú Nhuận",
-    schedule: "2 buổi/tuần (T7-CN)",
-    time: "Sáng 09:00 - 11:00",
-    requirement: "Giáo viên chuyên Anh",
-    salary: "4.000.000đ",
-  },
-  {
-    id: 3,
-    code: "DH2024-03",
-    status: "Đang xem xét",
-    title: "Vật Lý - Lớp 12 (Ôn thi ĐH)",
-    location: "Hẻm 45 Đinh Bộ Lĩnh, Bình Thạnh",
-    schedule: "3 buổi/tuần (T3-T5-T7)",
-    time: "19:30 - 21:00",
-    requirement: "SV năm 3-4 chuyên ngành Sư phạm Lý",
-    salary: "3.200.000đ",
-  },
-  {
-    id: 5,
-    code: "DH2024-03",
-    status: "Đang xem xét",
-    title: "Vật Lý - Lớp 12 (Ôn thi ĐH)",
-    location: "Hẻm 45 Đinh Bộ Lĩnh, Bình Thạnh",
-    schedule: "3 buổi/tuần (T3-T5-T7)",
-    time: "19:30 - 21:00",
-    requirement: "SV năm 3-4 chuyên ngành Sư phạm Lý",
-    salary: "3.200.000đ",
-  },
-  {
-    id: 4,
-    code: "DH2024-03",
-    status: "Đang xem xét",
-    title: "Vật Lý - Lớp 12 (Ôn thi ĐH)",
-    location: "Hẻm 45 Đinh Bộ Lĩnh, Bình Thạnh",
-    schedule: "3 buổi/tuần (T3-T5-T7)",
-    time: "19:30 - 21:00",
-    requirement: "SV năm 3-4 chuyên ngành Sư phạm Lý",
-    salary: "3.200.000đ",
-  },
-  {
-    id: 6,
-    code: "DH2024-03",
-    status: "Đang xem xét",
-    title: "Vật Lý - Lớp 12 (Ôn thi ĐH)",
-    location: "Hẻm 45 Đinh Bộ Lĩnh, Bình Thạnh",
-    schedule: "3 buổi/tuần (T3-T5-T7)",
-    time: "19:30 - 21:00",
-    requirement: "SV năm 3-4 chuyên ngành Sư phạm Lý",
-    salary: "3.200.000đ",
-  },
-];
+import { getClasses } from "../api/class.api";
 
 const popularTags = [
   "Toán lớp 12",
@@ -80,145 +13,201 @@ const popularTags = [
 ];
 
 function TutorPage() {
+  const [jobs, setJobs] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
+
   const itemsPerPage = 4;
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentJobs = jobsData.slice(indexOfFirstItem, indexOfLastItem);
+  useEffect(() => {
+    loadJobs();
+  }, []);
 
-  const totalPages = Math.ceil(jobsData.length / itemsPerPage);
+  const loadJobs = async () => {
+    try {
+      const { data } = await getClasses({
+        status: "AVAILABLE",
+      });
 
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setJobs(data);
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const currentJobs = jobs.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(jobs.length / itemsPerPage);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <div className="font-sans bg-neutral text-slate-800 p-4 md:p-8 max-w-7xl mx-auto space-y-12">
+    <div
+      className="
+      font-sans
+      bg-neutral
+      text-slate-800
+      p-4
+      md:p-8
+      max-w-7xl
+      mx-auto
+      space-y-12
+    "
+    >
       <div>
-        <h1 className="text-4xl font-extrabold mb-4 text-slate-950">
+        <h1
+          className="
+          text-4xl
+          font-extrabold
+          mb-4
+        "
+        >
           Tìm lớp phù hợp với bạn
         </h1>
-        <p className="text-lg text-headline max-w-2xl">
-          Khám phá hàng trăm cơ hội giảng dạy mới mỗi ngày. Giúp học sinh tiến
-          bộ và nâng cao thu nhập của chính bạn.
+
+        <p
+          className="
+          text-lg
+          text-headline
+        "
+        >
+          Khám phá hàng trăm cơ hội giảng dạy mới mỗi ngày.
         </p>
       </div>
 
-      <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-end">
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-headline block">
-              Yêu cầu
-            </label>
-            <select className="w-full bg-neutral border border-slate-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm">
-              <option>Tất cả yêu cầu</option>
-              <option>Sinh viên</option>
-              <option>Giáo viên đứng lớp</option>
-              <option>Giáo viên tự do</option>
-            </select>
-          </div>
+      <div
+        className="
+        grid
+        grid-cols-1
+        lg:grid-cols-3
+        gap-8
+      "
+      >
+        <div
+          className="
+          lg:col-span-2
+          space-y-6
+        "
+        >
+          {currentJobs.length === 0 ? (
+            <div
+              className="
+              bg-white
+              rounded-xl
+              border
+              p-10
+              text-center
+            "
+            >
+              Hiện chưa có lớp đang tuyển.
+            </div>
+          ) : (
+            <>
+              <div className="space-y-6">
+                {currentJobs.map((job) => (
+                  <JobCard key={job.id} job={job} />
+                ))}
+              </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-headline block">
-              Môn học
-            </label>
-            <select className="w-full bg-neutral border border-slate-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm">
-              <option>Tất cả môn học</option>
-              <option>Toán học</option>
-              <option>Ngữ văn</option>
-              <option>Tiếng Anh</option>
-              <option>Vật lý</option>
-            </select>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-headline block">
-              Khối lớp
-            </label>
-            <select className="w-full bg-neutral border border-slate-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm">
-              <option>Tất cả khối</option>
-              <option>Tiểu học</option>
-              <option>THCS</option>
-              <option>THPT</option>
-              <option>Luyện thi đại học</option>
-            </select>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-headline block">
-              Khu vực
-            </label>
-            <select className="w-full bg-neutral border border-slate-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-tertiary transition-all outline-none text-sm">
-              <option>Tất cả khu vực</option>
-              <option>Quận 1</option>
-              <option>Quận 3</option>
-              <option>Quận Bình Thạnh</option>
-              <option>Quận Tân Bình</option>
-            </select>
-          </div>
-
-          <button className="bg-tertiary text-white h-[46px] rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors cursor-pointer">
-            <i className="fas fa-search"></i>
-            Tìm kiếm
-          </button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-6">
-          <div className="space-y-6">
-            {currentJobs.map((job) => (
-              <JobCard key={job.id} job={job} />
-            ))}
-          </div>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </>
+          )}
         </div>
 
         <div className="space-y-8">
-          <div className="bg-tertiary p-8 rounded-xl text-white shadow-lg relative overflow-hidden group">
-            <div className="absolute -right-12 -bottom-12 w-48 h-48 bg-white/10 rounded-full blur-3xl transition-transform group-hover:scale-150 duration-700"></div>
-            <div className="relative z-10">
-              <h4 className="text-2xl font-bold mb-4">Bạn chưa là gia sư?</h4>
-              <p className="text-sm opacity-90 mb-6 leading-relaxed">
-                Đăng ký trở thành gia sư ngay hôm nay để có cơ hội tiếp cận hàng
-                nghìn lớp học chất lượng cao và nhận mức thu nhập hấp dẫn.
-              </p>
-              <ul className="space-y-3 mb-8 text-sm">
-                <li className="flex items-center gap-3">
-                  <i className="fas fa-check-circle text-secondary"></i>
-                  <span>Phí nhận lớp ưu đãi</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <i className="fas fa-check-circle text-secondary"></i>
-                  <span>Hỗ trợ giáo trình dạy</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <i className="fas fa-check-circle text-secondary"></i>
-                  <span>Thanh toán minh bạch</span>
-                </li>
-              </ul>
-              <button className="bg-secondary text-slate-900 w-full py-3.5 rounded-lg font-bold hover:brightness-105 transition-all shadow-md cursor-pointer text-center text-sm uppercase">
-                Đăng ký ngay
-              </button>
-            </div>
+          <div
+            className="
+            bg-tertiary
+            p-8
+            rounded-xl
+            text-white
+          "
+          >
+            <h4
+              className="
+              text-2xl
+              font-bold
+              mb-4
+            "
+            >
+              Bạn chưa là gia sư?
+            </h4>
+
+            <p
+              className="
+              text-sm
+              mb-6
+            "
+            >
+              Đăng ký trở thành gia sư để tiếp cận các lớp học chất lượng.
+            </p>
+
+            <button
+              className="
+              bg-secondary
+              text-slate-900
+              w-full
+              py-3
+              rounded-lg
+              font-bold
+            "
+            >
+              Đăng ký ngay
+            </button>
           </div>
 
-          <div className="bg-white p-6 rounded-xl border border-slate-200">
-            <h4 className="text-lg font-bold mb-4 text-slate-900">
+          <div
+            className="
+            bg-white
+            p-6
+            rounded-xl
+            border
+          "
+          >
+            <h4
+              className="
+              font-bold
+              mb-4
+            "
+            >
               Môn học phổ biến
             </h4>
-            <div className="flex flex-wrap gap-2">
+
+            <div
+              className="
+              flex
+              flex-wrap
+              gap-2
+            "
+            >
               {popularTags.map((tag, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1.5 bg-neutral text-headline rounded-full text-xs font-medium border border-slate-200 hover:border-primary transition-colors cursor-pointer"
+                  className="
+                      px-3
+                      py-1
+                      rounded-full
+                      bg-neutral
+                      border
+                      text-xs
+                    "
                 >
                   {tag}
                 </span>
@@ -226,16 +215,55 @@ function TutorPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white border border-slate-200 p-4 rounded-lg text-center shadow-sm">
-              <div className="text-2xl font-bold text-primary">500+</div>
-              <div className="text-xs text-headline mt-1">
-                Lớp mới mỗi tháng
+          <div
+            className="
+            grid
+            grid-cols-2
+            gap-4
+          "
+          >
+            <div
+              className="
+              bg-white
+              border
+              p-4
+              rounded-lg
+              text-center
+            "
+            >
+              <div
+                className="
+                text-2xl
+                font-bold
+                text-primary
+              "
+              >
+                {jobs.length}
               </div>
+
+              <p className="text-xs">Lớp đang tuyển</p>
             </div>
-            <div className="bg-white border border-slate-200 p-4 rounded-lg text-center shadow-sm">
-              <div className="text-2xl font-bold text-primary">10k+</div>
-              <div className="text-xs text-headline mt-1">Gia sư tin dùng</div>
+
+            <div
+              className="
+              bg-white
+              border
+              p-4
+              rounded-lg
+              text-center
+            "
+            >
+              <div
+                className="
+                text-2xl
+                font-bold
+                text-primary
+              "
+              >
+                10k+
+              </div>
+
+              <p className="text-xs">Gia sư tin dùng</p>
             </div>
           </div>
         </div>
