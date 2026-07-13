@@ -80,13 +80,6 @@ function Header() {
           >
             Đăng nhập
           </Link>
-          <Link
-            to="/register"
-            onClick={() => setIsOpen(false)}
-            className="bg-primary text-white font-bold text-center py-2.5 rounded-lg text-sm"
-          >
-            Đăng ký
-          </Link>
         </div>
 
         <ul className="flex flex-col gap-5">

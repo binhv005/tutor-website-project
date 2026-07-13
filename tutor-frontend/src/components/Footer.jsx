@@ -9,72 +9,84 @@ import {
 
 function Footer() {
   const serviceMenu = [
-    "Gia sư Tiểu Học",
-    "Gia sư THCS",
-    "Gia sư Năng Khiếu",
-    "Luyện thi vào 10",
-    "Luyện thi Đại Học",
-    "Luyện thi IELTS",
-  ];
-
-  const contactMenu = [
-    {
-      icon: faLocationDot,
-      text: "Số 123, Đường Giải Phóng, Hai Bà Trưng, Hà Nội",
-    },
-    {
-      icon: faPhone,
-      text: "098x.xxx.xxx",
-    },
-    {
-      icon: faEnvelope,
-      text: "lienhe@giasudohang.com",
-    },
+    { name: "Gia sư Tiểu Học", path: "/services/primary" },
+    { name: "Gia sư THCS", path: "/services/secondary" },
+    { name: "Luyện thi vào 10", path: "/services/grade-10" },
+    { name: "Luyện thi Đại Học", path: "/services/university" },
   ];
 
   return (
-    <footer className="bg-neutral px-5 py-10">
-      <div className="grid grid-cols-1 lg:grid-cols-3 lg: place-items-center">
-        <div>
-          <div className="flex items-center">
-            <img src={tutorLogo} alt="logo" className="w-12 py-3" />
-            <p className="font-bold text-primary">Trung tâm gia sư Đỗ Hằng</p>
+    <footer className="bg-neutral-50 border-t border-gray-200">
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Cột 1: Thông tin thương hiệu */}
+        <div className="col-span-1 lg:col-span-1">
+          <div className="flex items-center gap-3 mb-4">
+            <img
+              src={tutorLogo}
+              alt="logo"
+              className="w-10 h-10 object-contain"
+            />
+            <span className="font-bold text-xl text-primary">Đỗ Hằng</span>
           </div>
-          <p className="text-headline py-3 lg:text-justify">
-            Trung tâm gia sư hàng đầu Việt Nam, chuyên cung cấp các giải pháp
-            học tập cá nhân hóa cho học sinh mọi lứa tuổi.
+          <p className="text-gray-600 leading-relaxed text-sm">
+            Trung tâm gia sư hàng đầu, mang đến giải pháp học tập cá nhân hóa,
+            nâng cao năng lực cho học sinh mọi lứa tuổi.
           </p>
         </div>
 
+        {/* Cột 2: Dịch vụ */}
         <div>
-          <h1 className="font-bold py-4 text-2xl">DỊCH VỤ</h1>
-          <ul>
+          <h3 className="font-bold text-lg text-gray-900 mb-4">Dịch vụ</h3>
+          <ul className="space-y-2">
             {serviceMenu.map((item, index) => (
-              <li key={index} className="py-1 text-headline hover:text-primary">
-                <Link to="/services">{item}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h1 className="font-bold py-4 text-2xl">LIÊN HỆ</h1>
-          <ul>
-            {contactMenu.map((item, index) => (
-              <li key={index} className="py-1 text-headline hover:text-primary">
-                <Link to="/contacts" className="flex items-center gap-2">
-                  <FontAwesomeIcon icon={item.icon} />
-                  {item.text}
+              <li key={index}>
+                <Link
+                  to={item.path}
+                  className="text-gray-600 hover:text-primary transition-colors text-sm"
+                >
+                  {item.name}
                 </Link>
               </li>
             ))}
           </ul>
         </div>
+
+        {/* Cột 3: Liên hệ */}
+        <div className="md:col-span-2 lg:col-span-2">
+          <h3 className="font-bold text-lg text-gray-900 mb-4">
+            Thông tin liên hệ
+          </h3>
+          <ul className="space-y-3">
+            <li className="flex items-start gap-3 text-gray-600 text-sm">
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                className="mt-1 text-primary"
+              />
+              <span>Số 123, Đường Giải Phóng, Hai Bà Trưng, Hà Nội</span>
+            </li>
+            <li className="flex items-center gap-3 text-gray-600 text-sm">
+              <FontAwesomeIcon icon={faPhone} className="text-primary" />
+              <a href="tel:098xxxxxxxx" className="hover:text-primary">
+                098x.xxx.xxx
+              </a>
+            </li>
+            <li className="flex items-center gap-3 text-gray-600 text-sm">
+              <FontAwesomeIcon icon={faEnvelope} className="text-primary" />
+              <a
+                href="mailto:lienhe@giasudohang.com"
+                className="hover:text-primary"
+              >
+                lienhe@giasudohang.com
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <hr className="border-headline my-5" />
-      <p className="py-10 text-headline lg:text-center">
+
+      {/* Bottom Bar */}
+      <div className="max-w-7xl mx-auto px-6 py-6 border-t border-gray-200 text-center text-gray-500 text-xs">
         © 2024 Trung tâm gia sư Đỗ Hằng. All rights reserved.
-      </p>
+      </div>
     </footer>
   );
 }
