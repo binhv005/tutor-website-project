@@ -1,42 +1,61 @@
-const service = require("../services/consultation.service");
-const { successResponse, errorResponse } = require("../utils/response");
+const prisma = require("../config/prisma");
+const AppError = require("../utils/AppError");
 
-exports.create = async (req, res) => {
-  try {
-    const result = await service.createConsultation(req.body);
+// 1. Lấy danh sách từ Database (Dành cho Admin)
+exports.getConsultations = async (query) => {
+  const page = parseInt(query?.page, 10) || 1;
+  const limit = parseInt(query?.limit, 10) || 10;
+  const skip = (page - 1) * limit;
 
-    return successResponse(res, result, "Gửi tư vấn thành công", 201);
-  } catch (error) {
-    return errorResponse(res, error.message, 400);
-  }
+  return await prisma.consultation.findMany({
+    skip: skip,
+    take: limit,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 };
 
-exports.getAll = async (req, res) => {
-  try {
-    const data = await service.getConsultations();
-
-    return successResponse(res, data, "Lấy danh sách tư vấn thành công");
-  } catch (error) {
-    return errorResponse(res, "Unable to load consultations", 500);
-  }
+// 2. Khách hàng tạo mới yêu cầu tư vấn
+exports.createConsultation = async (consultationData) => {
+  return await prisma.consultation.create({
+    data: {
+      name: consultationData.name,
+      phone: consultationData.phone,
+      grade: consultationData.grade,
+      subject: consultationData.subject,
+      message: consultationData.message,
+      status: "PENDING",
+    },
+  });
 };
 
-exports.update = async (req, res) => {
-  try {
-    const result = await service.updateConsultation(req.params.id, req.body);
+// 3. Cập nhật trạng thái tư vấn
+exports.updateStatus = async (consultationId, updateData) => {
+  const idAsInt = parseInt(consultationId, 10);
+  if (isNaN(idAsInt)) throw new AppError("ID không hợp lệ", 400);
 
-    return successResponse(res, result, "Cập nhật tư vấn thành công");
-  } catch (error) {
-    return errorResponse(res, error.message, 400);
-  }
+  const existed = await prisma.consultation.findUnique({
+    where: { id: idAsInt },
+  });
+  if (!existed)
+    throw new AppError("Không tìm thấy dữ liệu yêu cầu tư vấn", 404);
+
+  return await prisma.consultation.update({
+    where: { id: idAsInt },
+    data: updateData,
+  });
 };
 
-exports.remove = async (req, res) => {
-  try {
-    await service.deleteConsultation(req.params.id);
+// 4. Xóa yêu cầu tư vấn
+exports.deleteConsultation = async (consultationId) => {
+  const idAsInt = parseInt(consultationId, 10);
+  if (isNaN(idAsInt)) throw new AppError("ID không hợp lệ", 400);
 
-    return successResponse(res, null, "Xóa liên hệ thành công");
-  } catch (error) {
-    return errorResponse(res, error.message, 400);
-  }
+  const existed = await prisma.consultation.findUnique({
+    where: { id: idAsInt },
+  });
+  if (!existed) throw new AppError("Không tìm thấy dữ liệu để xóa", 404);
+
+  return await prisma.consultation.delete({ where: { id: idAsInt } });
 };

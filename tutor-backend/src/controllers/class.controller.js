@@ -1,77 +1,36 @@
 const classService = require("../services/class.service");
+const asyncHandler = require("../utils/asyncHandler");
+const { successResponse } = require("../utils/response");
 
-exports.createClass = async (req, res) => {
-  try {
-    const newClass = await classService.createClass(req.user.id, req.body);
+// 1. Lấy danh sách lớp
+exports.getClasses = asyncHandler(async (req, res) => {
+  const classes = await classService.getClasses(req.query);
+  return successResponse(res, classes, "Lấy danh sách lớp thành công");
+});
 
-    return res.status(201).json({
-      success: true,
-      message: "Tạo lớp thành công",
-      data: newClass,
-    });
-  } catch (err) {
-    console.error(err);
+// 2. Tạo lớp mới
+exports.createClass = asyncHandler(async (req, res) => {
+  const newClass = await classService.createClass(req.user.id, req.body);
+  return successResponse(res, newClass, "Tạo lớp thành công", 201);
+});
 
-    return res.status(err.statusCode || 500).json({
+// 3. Cập nhật lớp học
+exports.updateClass = asyncHandler(async (req, res) => {
+  const classId = req.params?.id;
+
+  if (!classId) {
+    return res.status(400).json({
       success: false,
-      message: err.message,
+      message: "Thiếu ID lớp học trên đường dẫn URL",
     });
   }
-};
 
-exports.getClasses = async (req, res) => {
-  try {
-    const classes = await classService.getClasses(req.query);
+  const updated = await classService.updateClass(classId, req.body);
+  return successResponse(res, updated, "Cập nhật thành công");
+});
 
-    return res.status(200).json({
-      success: true,
-      message: "Lấy danh sách lớp thành công",
-      data: classes,
-    });
-  } catch (err) {
-    console.error(err);
-
-    return res.status(err.statusCode || 500).json({
-      success: false,
-      message: err.message,
-    });
-  }
-};
-
-exports.updateClass = async (req, res) => {
-  try {
-    const updated = await classService.updateClass(req.params.id, req.body);
-
-    return res.status(200).json({
-      success: true,
-      message: "Cập nhật thành công",
-      data: updated,
-    });
-  } catch (err) {
-    console.error(err);
-
-    return res.status(err.statusCode || 400).json({
-      success: false,
-      message: err.message,
-    });
-  }
-};
-
-exports.deleteClass = async (req, res) => {
-  try {
-    await classService.deleteClass(req.params.id);
-
-    return res.status(200).json({
-      success: true,
-      message: "Xóa lớp thành công",
-      data: null,
-    });
-  } catch (err) {
-    console.error(err);
-
-    return res.status(err.statusCode || 400).json({
-      success: false,
-      message: err.message,
-    });
-  }
-};
+// 4. Xóa lớp học
+exports.deleteClass = asyncHandler(async (req, res) => {
+  await classService.deleteClass(req.params.id);
+  return successResponse(res, null, "Xóa lớp thành công");
+});

@@ -1,77 +1,41 @@
-const service = require("../services/consultation.service");
+const consultationService = require("../services/consultation.service");
+const asyncHandler = require("../utils/asyncHandler");
+const { successResponse } = require("../utils/response");
 
-exports.create = async (req, res) => {
-  try {
-    const result = await service.createConsultation(req.body);
+// 1. Khách hàng gửi form tư vấn (Khớp với controller.create)
+exports.create = asyncHandler(async (req, res) => {
+  const newConsultation = await consultationService.createConsultation(
+    req.body,
+  );
+  return successResponse(
+    res,
+    newConsultation,
+    "Gửi yêu cầu tư vấn thành công",
+    201,
+  );
+});
 
-    return res.status(201).json({
-      success: true,
-      message: "Gửi tư vấn thành công",
-      data: result,
-    });
-  } catch (error) {
-    console.error(error);
+// 2. Admin lấy danh sách (Khớp với controller.getAll)
+exports.getAll = asyncHandler(async (req, res) => {
+  const consultations = await consultationService.getConsultations(req.query);
+  return successResponse(
+    res,
+    consultations,
+    "Lấy danh sách yêu cầu tư vấn thành công",
+  );
+});
 
-    return res.status(error.statusCode || 400).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+// 3. Admin cập nhật trạng thái (Khớp với controller.updateStatus)
+exports.updateStatus = asyncHandler(async (req, res) => {
+  const updated = await consultationService.updateStatus(
+    req.params.id,
+    req.body,
+  );
+  return successResponse(res, updated, "Cập nhật trạng thái tư vấn thành công");
+});
 
-exports.getAll = async (req, res) => {
-  try {
-    const data = await service.getConsultations();
-
-    return res.status(200).json({
-      success: true,
-      message: "Lấy danh sách tư vấn thành công",
-      data: data,
-    });
-  } catch (error) {
-    console.error(error);
-
-    return res.status(error.statusCode || 500).json({
-      success: false,
-      message: error.message || "Unable to load consultations",
-    });
-  }
-};
-
-exports.update = async (req, res) => {
-  try {
-    const result = await service.updateConsultation(req.params.id, req.body);
-
-    return res.status(200).json({
-      success: true,
-      message: "Cập nhật tư vấn thành công",
-      data: result,
-    });
-  } catch (error) {
-    console.error(error);
-
-    return res.status(error.statusCode || 400).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
-exports.remove = async (req, res) => {
-  try {
-    await service.deleteConsultation(req.params.id);
-
-    return res.status(200).json({
-      success: true,
-      message: "Xóa liên hệ thành công",
-      data: null,
-    });
-  } catch (error) {
-    console.error(error);
-
-    return res.status(error.statusCode || 400).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+// 4. Admin xóa yêu cầu (Khớp với controller.remove)
+exports.remove = asyncHandler(async (req, res) => {
+  await consultationService.deleteConsultation(req.params.id);
+  return successResponse(res, null, "Xóa yêu cầu tư vấn thành công");
+});

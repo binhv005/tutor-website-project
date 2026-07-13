@@ -1,4 +1,5 @@
 const errorMiddleware = require("./src/middlewares/error.middleware");
+const consultationRoutes = require("./src/routes/consultationRoutes");
 require("dotenv").config();
 
 const cors = require("cors");
@@ -31,7 +32,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/classes", classRoute);
-app.use("/api/consultations", consultationRoute);
+app.use("/api/consultations", consultationRoutes);
 app.use(errorMiddleware);
 const PORT = process.env.PORT || 5050;
 

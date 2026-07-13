@@ -1,24 +1,36 @@
 const express = require("express");
 const router = express.Router();
 const classController = require("../controllers/class.controller");
-const { authorize, checkRole } = require("../middlewares/auth.middleware");
+const validate = require("../middlewares/validate.middleware");
+const {
+  createClassSchema,
+  updateClassSchema,
+} = require("../validators/class.schema");
 
-console.log(classController);
+// BÓC TÁCH ĐÚNG CÁC HÀM TỪ OBJECT MIDDLEWARE
+const { authentication } = require("../middlewares/auth.middleware");
 
-router.post("/", authorize, checkRole(["ADMIN"]), classController.createClass);
+// 1. Route Lấy danh sách lớp
 router.get("/", classController.getClasses);
 
+// 2. Route Tạo lớp
 router.post(
-  "/:id/apply",
-  authorize,
-  checkRole(["TUTOR"]),
-  classController.applyClass,
+  "/",
+  authentication,
+  validate(createClassSchema),
+  classController.createClass,
 );
 
-router.patch(
-  "/apply/:id",
-  authorize,
-  checkRole(["ADMIN"]),
-  classController.updateApplies,
+// 3. Route Cập nhật lớp
+router.put(
+  "/:id",
+  authentication,
+  validate(updateClassSchema),
+  classController.updateClass,
 );
+
+// 4. Route Xóa lớp (ĐÃ BỔ SUNG Ở ĐÂY)
+// Vì xóa cần biết xóa lớp nào (:id) và ai xóa (authentication)
+router.delete("/:id", authentication, classController.deleteClass);
+
 module.exports = router;

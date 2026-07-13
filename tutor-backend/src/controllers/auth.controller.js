@@ -9,15 +9,8 @@ const cookieOptions = {
 
 exports.login = async (req, res) => {
   try {
+    // Không cần check validation thủ công ở đây nữa, Zod đã xử lý ở route
     const { username, password } = req.body;
-
-    // Tạm thời giữ lại validate thuần trước khi nâng cấp lên Zod ở bước sau
-    if (!username || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "Tên đăng nhập và mật khẩu không được để trống",
-      });
-    }
 
     const result = await authService.login(username, password);
 
@@ -41,14 +34,8 @@ exports.login = async (req, res) => {
 
 exports.changePassword = async (req, res) => {
   try {
+    // Không cần check validation thủ công ở đây nữa, Zod đã xử lý ở route
     const { oldPassword, newPassword } = req.body;
-
-    if (!oldPassword || !newPassword) {
-      return res.status(400).json({
-        success: false,
-        message: "Vui lòng nhập đầy đủ thông tin",
-      });
-    }
 
     await authService.changePassword(req.user.id, oldPassword, newPassword);
 

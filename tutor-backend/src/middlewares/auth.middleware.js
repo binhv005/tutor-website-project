@@ -1,37 +1,58 @@
 const jwt = require("jsonwebtoken");
-//  lấy token từ header
-const authorize = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  // kiểm tra có gửi token không
-  if (!authHeader || !authHeader.startsWith("Bearer "))
-    return res.status(401).json({ message: "Người dùng không gửi token" });
 
-  // giải mã token
-  const token = authHeader.split(" ")[1];
+// Kiểm tra user đã đăng nhập chưa
+const authentication = (req, res, next) => {
+  const token = req.cookies.accessToken;
+
+  if (!token) {
+    return res.status(401).json({
+      message: "Chưa đăng nhập",
+    });
+  }
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     req.user = decoded;
+
     next();
   } catch (error) {
-    console.error(error);
-    res.status(401).json({ msg: "Lỗi server" });
+    console.error("JWT Error:", error.message);
+
+    return res.status(401).json({
+      message: "Phiên đăng nhập hết hạn",
+    });
   }
 };
 
-const checkRole = (allowedRole) => {
+// Kiểm tra quyền
+const checkRole = (...allowedRoles) => {
   return (req, res, next) => {
-    const role = req.user.role;
     try {
-      if (allowedRole.includes(role)) return next();
-      else return res.status(403).json({ msg: "Bạn không có quyền truy cập" });
+      if (!req.user) {
+        return res.status(401).json({
+          message: "Chưa xác thực",
+        });
+      }
+
+      if (!allowedRoles.includes(req.user.role)) {
+        return res.status(403).json({
+          message: "Bạn không có quyền truy cập",
+        });
+      }
+
+      next();
     } catch (error) {
       console.error(error);
-      res.status(500).json({ msg: "Lỗi server" });
+
+      return res.status(500).json({
+        message: "Lỗi server",
+      });
     }
   };
 };
 
 module.exports = {
-  authorize,
+  authentication,
   checkRole,
 };
