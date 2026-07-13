@@ -1,8 +1,10 @@
+import { useState } from "react";
+
 import Sidebar from "../components/Sidebar";
+
 import ClassManagerTab from "../components/ClassManagerTab";
 import ContactManagerTab from "../components/ContactManagerTab";
 import ChangePasswordTab from "../components/ChangePasswordTab";
-import { useState } from "react";
 
 function DashboardPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -11,31 +13,36 @@ function DashboardPage() {
     switch (activeTab) {
       case "class-manager":
         return <ClassManagerTab />;
+
       case "contact-manager":
         return <ContactManagerTab />;
+
       case "change-password":
         return <ChangePasswordTab />;
+
       default:
         return <ClassManagerTab />;
     }
   };
 
   return (
-    <div className="bg-neutral min-h-screen text-gray-800 font-sans">
+    <div className="bg-gray-50 min-h-screen">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <main className="md:ml-64 min-h-screen flex flex-col">
-        <header className="sticky top-0 z-40 bg-white border-b border-gray-200 h-16 flex items-center justify-between px-6 md:px-10">
-          <div className="flex items-center gap-4">
-            <h2 className="text-lg md:text-xl font-bold text-primary">
-              Trung tâm Gia sư Đỗ Hằng
-            </h2>
+      <main className="md:ml-64">
+        <header className="bg-white border-b sticky top-0 z-30">
+          <div className="h-16 flex items-center justify-between px-6">
+            <div>
+              <h1 className="text-xl font-bold text-primary">
+                Hệ thống quản trị
+              </h1>
+
+              <p className="text-sm text-gray-500">Trung tâm Gia sư Đỗ Hằng</p>
+            </div>
           </div>
         </header>
 
-        <div className="p-6 md:p-8 max-w-[1280px] mx-auto w-full flex flex-col gap-8">
-          {renderTabContent()}
-        </div>
+        <div className="p-6">{renderTabContent()}</div>
       </main>
     </div>
   );
