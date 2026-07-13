@@ -80,8 +80,6 @@ function ClassManagerTab() {
     loadClasses();
   }, [debouncedFilters, loadClasses]);
 
-  // CREATE
-
   const handleCreate = async (data) => {
     try {
       await createClass(data);
@@ -93,8 +91,6 @@ function ClassManagerTab() {
       alert(err.response?.data?.msg || "Tạo lớp thất bại");
     }
   };
-
-  // UPDATE
 
   const handleUpdate = async (data) => {
     try {
@@ -109,8 +105,6 @@ function ClassManagerTab() {
       alert(err.response?.data?.msg || "Cập nhật thất bại");
     }
   };
-
-  // DELETE
 
   const handleDelete = async () => {
     if (isDeleting) return;

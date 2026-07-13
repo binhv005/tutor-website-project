@@ -72,7 +72,6 @@ function ClassFormModal({ open, onClose, onSubmit, initialData }) {
 
         tuition: form.tuition,
       });
-
     } catch (error) {
       console.error("Submit class error:", error);
     } finally {
@@ -108,8 +107,6 @@ function ClassFormModal({ open, onClose, onSubmit, initialData }) {
         overflow-y-auto
         "
       >
-        {/* Header */}
-
         <div
           className="
           border-b
@@ -134,8 +131,6 @@ function ClassFormModal({ open, onClose, onSubmit, initialData }) {
           space-y-5
           "
         >
-          {/* Subject + Grade */}
-
           <div
             className="
             grid
@@ -182,8 +177,6 @@ function ClassFormModal({ open, onClose, onSubmit, initialData }) {
             </div>
           </div>
 
-          {/* Address */}
-
           <div>
             <label className="text-sm font-medium">Địa chỉ</label>
 
@@ -202,8 +195,6 @@ function ClassFormModal({ open, onClose, onSubmit, initialData }) {
               required
             />
           </div>
-
-          {/* Tuition + Sessions */}
 
           <div
             className="
@@ -319,8 +310,6 @@ function ClassFormModal({ open, onClose, onSubmit, initialData }) {
             </div>
           </div>
 
-          {/* Note */}
-
           <div>
             <label className="text-sm font-medium">Ghi chú</label>
 
@@ -339,8 +328,6 @@ function ClassFormModal({ open, onClose, onSubmit, initialData }) {
               "
             />
           </div>
-
-          {/* Status */}
 
           <div>
             <label className="text-sm font-medium">Trạng thái</label>
@@ -370,8 +357,6 @@ function ClassFormModal({ open, onClose, onSubmit, initialData }) {
               <option value="ASSIGNED">Đã có gia sư</option>
             </select>
           </div>
-
-          {/* Button */}
 
           <div
             className="

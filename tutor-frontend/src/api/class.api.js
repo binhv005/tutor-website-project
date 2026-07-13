@@ -1,7 +1,6 @@
 import api from "./axios";
 
 export const getClasses = (params) => {
-  // Axios tự động convert object params thành query string: ?page=1&subject=Toán...
   return api.get("/classes", { params });
 };
 

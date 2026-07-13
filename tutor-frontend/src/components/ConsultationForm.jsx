@@ -88,8 +88,6 @@ export default function ConsultationForm() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* NAME */}
-
         <div>
           <label className={getLabelClass("name")}>Họ và tên phụ huynh</label>
 
@@ -125,8 +123,6 @@ export default function ConsultationForm() {
             required
           />
         </div>
-
-        {/* PHONE */}
 
         <div>
           <label className={getLabelClass("phone")}>
@@ -167,8 +163,6 @@ export default function ConsultationForm() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          {/* GRADE */}
-
           <div>
             <label className={getLabelClass("grade")}>Lớp của con</label>
 
@@ -203,8 +197,6 @@ export default function ConsultationForm() {
               <option>Luyện thi</option>
             </select>
           </div>
-
-          {/* SUBJECT */}
 
           <div>
             <label className={getLabelClass("subject")}>Môn học quan tâm</label>

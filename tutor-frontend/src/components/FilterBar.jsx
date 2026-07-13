@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 
 function FilterBar({ filters, setFilters }) {
-  // 1. Dùng local state để input gõ mượt mà không bị delay
   const [localFilters, setLocalFilters] = useState(filters);
 
-  // 2. Đồng bộ khi cha reset filter (nhấn nút "Xóa bộ lọc")
   useEffect(() => {
     setLocalFilters(filters);
   }, [filters]);
 
-  // 3. Debounce: Chỉ cập nhật filters của cha sau khi user dừng gõ 500ms
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilters(localFilters);

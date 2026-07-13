@@ -7,8 +7,6 @@ import {
   faGraduationCap,
   faCheck,
   faMoneyBill,
-  faShieldHalved,
-  faHeadset,
 } from "@fortawesome/free-solid-svg-icons";
 const commit = [
   {
