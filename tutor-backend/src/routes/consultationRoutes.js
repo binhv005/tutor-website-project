@@ -6,24 +6,19 @@ const {
   createConsultationSchema,
   updateConsultationSchema,
 } = require("../validators/consultation.schema");
-
-// BÓC TÁCH CHÍNH XÁC HÀM TỪ OBJECT MIDDLEWARE (ĐÃ SỬA DÒNG NÀY)
 const { authentication } = require("../middlewares/auth.middleware");
 
-// Khách hàng gửi form tư vấn (Không cần login, nhưng cần validate đầu vào)
 router.post(
   "/",
   validate(createConsultationSchema),
   consultationController.create,
 );
-
-// Các route quản lý của Admin (Đổi authMiddleware thành authentication)
-router.get("/", authentication, consultationController.getAll); // <-- Dòng số 19 gây lỗi đã được sửa ở đây
+router.get("/", authentication, consultationController.getAll);
 router.put(
   "/:id",
   authentication,
   validate(updateConsultationSchema),
-  consultationController.updateStatus, // ◄ Đổi từ .update thành .updateStatus
+  consultationController.updateStatus,
 );
 router.delete("/:id", authentication, consultationController.remove);
 

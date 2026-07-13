@@ -1,5 +1,7 @@
 const errorMiddleware = require("./src/middlewares/error.middleware");
 const consultationRoutes = require("./src/routes/consultationRoutes");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./src/docs/swagger");
 require("dotenv").config();
 
 const cors = require("cors");
@@ -30,6 +32,7 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/auth", authRoute);
 app.use("/api/classes", classRoute);
 app.use("/api/consultations", consultationRoutes);

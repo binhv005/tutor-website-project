@@ -1,6 +1,7 @@
 const classService = require("../services/class.service");
 const asyncHandler = require("../utils/asyncHandler");
 const { successResponse } = require("../utils/response");
+const AppError = require("../utils/AppError");
 
 // 1. Lấy danh sách lớp
 exports.getClasses = asyncHandler(async (req, res) => {
@@ -16,14 +17,10 @@ exports.createClass = asyncHandler(async (req, res) => {
 
 // 3. Cập nhật lớp học
 exports.updateClass = asyncHandler(async (req, res) => {
-  const classId = req.params?.id;
+  const classId = req.params.id;
 
-  if (!classId) {
-    return res.status(400).json({
-      success: false,
-      message: "Thiếu ID lớp học trên đường dẫn URL",
-    });
-  }
+  // Thay thế việc dùng res.status().json() bằng cách throw AppError (nếu cần check kĩ)
+  if (!classId) throw new AppError("Thiếu ID lớp học trên đường dẫn URL", 400);
 
   const updated = await classService.updateClass(classId, req.body);
   return successResponse(res, updated, "Cập nhật thành công");

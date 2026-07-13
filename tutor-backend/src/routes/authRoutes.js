@@ -7,16 +7,13 @@ const {
   changePasswordSchema,
 } = require("../validators/auth.schema");
 
-// BÓC TÁCH CHÍNH XÁC HÀM ĐĂNG NHẬP TỪ OBJECT MIDDLEWARE
 const { authentication } = require("../middlewares/auth.middleware");
 
-// Áp dụng validate vào route login (Hoạt động mượt mà)
 router.post("/login", validate(loginSchema), authController.login);
 
-// MỞ LẠI ROUTE ĐỔI MẬT KHẨU - THAY authMiddleware THÀNH authentication
 router.post(
   "/change-password",
-  authentication, // <--- Đã sửa ở đây
+  authentication,
   validate(changePasswordSchema),
   authController.changePassword,
 );
