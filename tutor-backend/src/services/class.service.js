@@ -18,22 +18,50 @@ exports.createClass = async (userId, classData) => {
 };
 
 // 2. Lấy danh sách lớp
+// 2. Lấy danh sách lớp (ĐÃ CÓ FILTERING)
 exports.getClasses = async (query) => {
-  const page = parseInt(query?.page) || 1;
-  const limit = parseInt(query?.limit) || 10;
-  const skip = (page - 1) * limit;
+  const { page, limit, subject, grade, status } = query;
 
-  return await prisma.class.findMany({
-    skip: skip,
-    take: limit,
-    orderBy: {
-      createdAt: "desc",
+  const currentPage = parseInt(page) || 1;
+  const itemsPerPage = parseInt(limit) || 10;
+  const skip = (currentPage - 1) * itemsPerPage;
+
+  // Xây dựng object điều kiện lọc
+  const where = {};
+
+  if (subject) {
+    where.subject = { contains: subject, mode: "insensitive" };
+  }
+  if (grade) {
+    where.grade = { contains: grade, mode: "insensitive" };
+  }
+  if (status) {
+    where.status = status; // Trạng thái là enum, khớp trực tiếp
+  }
+
+  // Lấy dữ liệu và tổng số bản ghi (để làm phân trang sau này)
+  const [items, total] = await Promise.all([
+    prisma.class.findMany({
+      where,
+      skip,
+      take: itemsPerPage,
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.class.count({ where }), // Đếm để biết có bao nhiêu kết quả khớp filter
+  ]);
+
+  return {
+    items,
+    pagination: {
+      total,
+      page: currentPage,
+      limit: itemsPerPage,
+      totalPages: Math.ceil(total / itemsPerPage),
     },
-  });
+  };
 };
-// 3. Cập nhật lớp học (ÉP KIỂU INT CHO ID)
+
 exports.updateClass = async (classId, updateData) => {
-  // Ép kiểu classId về số nguyên Int để khớp với database
   const idAsInt = parseInt(classId, 10);
 
   if (isNaN(idAsInt)) {
@@ -42,7 +70,7 @@ exports.updateClass = async (classId, updateData) => {
 
   // Kiểm tra xem lớp học có tồn tại không
   const existedClass = await prisma.class.findUnique({
-    where: { id: idAsInt }, // <-- Dùng idAsInt thay vì classId gốc
+    where: { id: idAsInt },
   });
 
   if (!existedClass) {
@@ -51,14 +79,12 @@ exports.updateClass = async (classId, updateData) => {
 
   // Tiến hành cập nhật
   return await prisma.class.update({
-    where: { id: idAsInt }, // <-- Dùng idAsInt
+    where: { id: idAsInt },
     data: updateData,
   });
 };
 
-// 4. Xóa lớp học (ÉP KIỂU INT CHO ID)
 exports.deleteClass = async (classId) => {
-  // Ép kiểu classId về số nguyên Int
   const idAsInt = parseInt(classId, 10);
 
   if (isNaN(idAsInt)) {
@@ -66,7 +92,7 @@ exports.deleteClass = async (classId) => {
   }
 
   const existedClass = await prisma.class.findUnique({
-    where: { id: idAsInt }, // <-- Dùng idAsInt
+    where: { id: idAsInt },
   });
 
   if (!existedClass) {
@@ -74,6 +100,6 @@ exports.deleteClass = async (classId) => {
   }
 
   return await prisma.class.delete({
-    where: { id: idAsInt }, // <-- Dùng idAsInt
+    where: { id: idAsInt },
   });
 };

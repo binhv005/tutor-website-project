@@ -1,7 +1,7 @@
 const { z } = require("zod");
 
-// Định nghĩa regex kiểm tra số điện thoại Việt Nam cơ bản (10 số, bắt đầu bằng 0)
-const phoneRegex = /^(0[3|5|7|8|9])+([0-8]{8})\b$/;
+// Định nghĩa regex kiểm tra số điện thoại Việt Nam (chấp nhận từ 0-9)
+const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})\b$/;
 
 exports.createClassSchema = z.object({
   body: z.object({
@@ -27,15 +27,25 @@ exports.createClassSchema = z.object({
 
     weeklySessions: z
       .string({ required_error: "Số buổi trên tuần là bắt buộc" })
-      .min(1, "Số buổi không được để trống")
-      .trim(),
+      .trim()
+      // Cho phép 1 hoặc nhiều khoảng trắng (\s+), cho phép mọi ký tự ở cuối (.*)
+      .regex(
+        /^\d+\s*[a-zA-Zà-ỹÀ-Ỹ]+\/[a-zA-Zà-ỹÀ-Ỹ]+.*$/,
+        "Định dạng không hợp lệ. Ví dụ: 3 buổi/tuần Thứ 2 3 4",
+      )
+      .min(1, "Không được để trống"),
 
     tuition: z
       .string({ required_error: "Học phí là bắt buộc" })
-      .min(1, "Học phí không được để trống")
-      .trim(),
+      .trim()
+      // Thêm 'ổ' vào danh sách cho phép, cờ 'i' để không phân biệt hoa thường
+      .regex(
+        /^\d+[\d\.,]*(k|tr|triệu|đ|l)?\/(buổi|buoi|tháng|tuần|ngày)$/i,
+        "Định dạng học phí không hợp lệ. Ví dụ: 120k/buổi, 3tr/tháng",
+      )
+      .min(1, "Học phí không được để trống"),
 
-    note: z.string().trim().optional(), // Trường ghi chú có thể truyền hoặc không
+    note: z.string().trim().optional(),
 
     parentName: z
       .string({ required_error: "Tên phụ huynh là bắt buộc" })
@@ -48,7 +58,7 @@ exports.createClassSchema = z.object({
   }),
 });
 
-// Schema dùng để validate dữ liệu khi Admin muốn cập nhật thông tin lớp (Cho phép truyền thiếu các trường)
+// Schema dùng để validate dữ liệu khi Admin cập nhật (Cho phép thiếu các trường)
 exports.updateClassSchema = z.object({
   body: exports.createClassSchema.shape.body.partial(),
 });
