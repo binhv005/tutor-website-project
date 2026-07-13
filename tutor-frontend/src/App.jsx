@@ -8,6 +8,8 @@ import ParentPage from "./pages/ParentPage";
 import TutorPage from "./pages/TutorPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
+import AdminRoute from "./route/adminRoute";
+import Forbidden from "./pages/Forbidden";
 function App() {
   return (
     <BrowserRouter>
@@ -21,7 +23,15 @@ function App() {
           <Route path="tutors" element={<TutorPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/admin/dashboard" element={<DashboardPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <AdminRoute>
+              <DashboardPage />
+            </AdminRoute>
+          }
+        />
+        <Route path="/403" element={<Forbidden />} />
       </Routes>
     </BrowserRouter>
   );
