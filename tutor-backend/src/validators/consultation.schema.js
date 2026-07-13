@@ -25,7 +25,7 @@ exports.createConsultationSchema = z.object({
       .min(1, "Môn học không hợp lệ")
       .trim(),
 
-    message: z.string().trim().optional(), // Lời nhắn có thể có hoặc không
+    message: z.string().trim().optional(),
   }),
 });
 
@@ -41,7 +41,6 @@ exports.updateConsultationSchema = z.object({
     subject: z.string().min(1).trim().optional(),
     message: z.string().trim().optional(),
 
-    // Validate trạng thái dựa theo Enum Status trong schema.prisma (PENDING, CONTACTED)
     status: z
       .enum(["PENDING", "CONTACTED"], {
         errorMap: () => ({

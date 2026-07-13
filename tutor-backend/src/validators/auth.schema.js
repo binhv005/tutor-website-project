@@ -1,6 +1,5 @@
 const { z } = require("zod");
 
-// 1. Schema validate cho chức năng Đăng nhập (Login) - GIỮ NGUYÊN
 exports.loginSchema = z.object({
   body: z.object({
     username: z
@@ -14,7 +13,6 @@ exports.loginSchema = z.object({
   }),
 });
 
-// 2. Schema validate cho chức năng Đổi mật khẩu (Change Password) - ĐÃ SỬA
 exports.changePasswordSchema = z.object({
   body: z
     .object({
@@ -27,6 +25,6 @@ exports.changePasswordSchema = z.object({
     })
     .refine((data) => data.newPassword !== data.oldPassword, {
       message: "Mật khẩu mới không được trùng với mật khẩu cũ",
-      path: ["newPassword"], // Báo lỗi chuẩn vào trường newPassword
+      path: ["newPassword"],
     }),
 });

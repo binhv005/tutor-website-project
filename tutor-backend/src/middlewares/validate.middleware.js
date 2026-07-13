@@ -14,7 +14,6 @@ const validate = (schema) => async (req, res, next) => {
 
     return next();
   } catch (error) {
-    // Kiểm tra nếu là lỗi của Zod hoặc đối tượng có chứa mảng errors
     if (
       error instanceof ZodError ||
       (error.errors && Array.isArray(error.errors))
@@ -22,10 +21,8 @@ const validate = (schema) => async (req, res, next) => {
       return res.status(400).json({
         success: false,
         message: "Dữ liệu đầu vào không hợp lệ",
-        // Dùng ?. để nếu error.errors bị undefined thì trả về [] chứ không sập app
         errors:
           error?.errors?.map((err) => ({
-            // Ghép chuỗi các cấp thuộc tính bị lỗi (VD: body.email) an toàn
             field: err?.path?.length > 0 ? err.path.join(".") : "global",
             message: err.message,
           })) || [],

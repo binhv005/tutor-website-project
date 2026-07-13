@@ -18,7 +18,6 @@ exports.createClass = async (userId, classData) => {
 };
 
 // 2. Lấy danh sách lớp
-// 2. Lấy danh sách lớp (ĐÃ CÓ FILTERING)
 exports.getClasses = async (query) => {
   const { page, limit, subject, grade, status } = query;
 
@@ -36,10 +35,9 @@ exports.getClasses = async (query) => {
     where.grade = { contains: grade, mode: "insensitive" };
   }
   if (status) {
-    where.status = status; // Trạng thái là enum, khớp trực tiếp
+    where.status = status;
   }
 
-  // Lấy dữ liệu và tổng số bản ghi (để làm phân trang sau này)
   const [items, total] = await Promise.all([
     prisma.class.findMany({
       where,
@@ -47,7 +45,7 @@ exports.getClasses = async (query) => {
       take: itemsPerPage,
       orderBy: { createdAt: "desc" },
     }),
-    prisma.class.count({ where }), // Đếm để biết có bao nhiêu kết quả khớp filter
+    prisma.class.count({ where }),
   ]);
 
   return {
