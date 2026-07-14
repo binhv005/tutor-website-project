@@ -7,14 +7,18 @@ A full-stack web application for managing tutoring classes in a tutoring center.
 ---
 
 ## 📸 Demo
-* Login
-<img width="1920" height="832" alt="image" src="https://github.com/user-attachments/assets/e77edc9a-171a-4200-be00-d06b24b1897b" />
-* Class Management
-<img width="1891" height="835" alt="image" src="https://github.com/user-attachments/assets/54b9bbd2-61fd-4f1d-9928-cff018634b92" />
-* Filtering & Search
-<img width="1470" height="655" alt="image" src="https://github.com/user-attachments/assets/955c6399-4fe0-4f00-be43-eeadf04b395f" />
-* Contact Management
-* <img width="1920" height="838" alt="image" src="https://github.com/user-attachments/assets/23106bee-47fa-4da4-95c7-9f53314c1cbc" />
+
+Frontend:
+
+https://tutor-website-project-ten.vercel.app
+
+Backend API:
+
+https://tutor-website-project.onrender.com
+
+API Documentation:
+
+https://tutor-website-project.onrender.com/api-docs
 
 ---
 
@@ -85,7 +89,31 @@ A full-stack web application for managing tutoring classes in a tutoring center.
 * JWT
 * Zod
 
+  
+### Database
+
+
+* PostgreSQL
+* Neon PostgreSQL (Production)
 ---
+
+### Deployment
+
+Frontend:
+
+* Vercel
+
+Backend:
+
+* Render
+
+Database:
+
+* Neon
+
+# 🏗 System Architecture
+<img width="277" height="649" alt="image" src="https://github.com/user-attachments/assets/76b66dc2-eb18-4beb-9d90-b30e4e58bd41" />
+
 
 # 📁 Project Structure
 
