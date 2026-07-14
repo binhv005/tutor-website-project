@@ -14,12 +14,9 @@ exports.createClass = asyncHandler(async (req, res) => {
 });
 
 exports.updateClass = asyncHandler(async (req, res) => {
-  const classId = req.params.id;
+  const result = await classService.updateClass(req.params.id, req.body);
 
-  if (!classId) throw new AppError("Thiếu ID lớp học trên đường dẫn URL", 400);
-
-  const updated = await classService.updateClass(classId, req.body);
-  return successResponse(res, updated, "Cập nhật thành công");
+  return successResponse(res, result, "Cập nhật lớp học thành công");
 });
 
 exports.deleteClass = asyncHandler(async (req, res) => {

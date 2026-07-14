@@ -58,7 +58,10 @@ exports.createClassSchema = z.object({
   }),
 });
 
-// Schema dùng để validate dữ liệu khi Admin cập nhật (Cho phép thiếu các trường)
 exports.updateClassSchema = z.object({
-  body: exports.createClassSchema.shape.body.partial(),
+  body: exports.createClassSchema.shape.body
+    .extend({
+      status: z.enum(["AVAILABLE", "ASSIGNED"]).optional(),
+    })
+    .partial(),
 });
