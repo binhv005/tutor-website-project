@@ -37,28 +37,6 @@ You can use the following account to test the application:
 
 ---
 
-# 📸 Screenshots
-
-<div align="center">
-
-<img src="./screenshots/login.png" width="700"/>
-
-<br/>
-
-Login Page
-
-<br/><br/>
-
-<img src="./screenshots/dashboard.png" width="900"/>
-
-<br/>
-
-Admin Dashboard
-
-</div>
-
----
-
 # ✨ Features
 
 ## 🔐 Authentication
