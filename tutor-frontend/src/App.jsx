@@ -8,7 +8,7 @@ import ParentPage from "./pages/ParentPage";
 import TutorPage from "./pages/TutorPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
-import AdminRoute from "./route/adminRoute";
+import AdminRoute from "./route/AdminRoute";
 import Forbidden from "./pages/Forbidden";
 function App() {
   return (
