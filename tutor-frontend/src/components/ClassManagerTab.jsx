@@ -95,11 +95,15 @@ function ClassManagerTab() {
   const handleUpdate = async (data) => {
     try {
       const { id: _, ...payload } = data;
-
       await updateClass(editingClass.id, payload);
 
-      await loadClasses();
+      setClasses((prevClasses) =>
+        prevClasses.map((c) =>
+          c.id === editingClass.id ? { ...c, ...payload } : c,
+        ),
+      );
 
+      await loadClasses();
       closeForm();
     } catch (err) {
       alert(err.response?.data?.msg || "Cập nhật thất bại");

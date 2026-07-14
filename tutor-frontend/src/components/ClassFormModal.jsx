@@ -61,16 +61,15 @@ function ClassFormModal({ open, onClose, onSubmit, initialData }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (loading) return;
 
     try {
       setLoading(true);
-
+      // Đảm bảo gửi đúng đối tượng dữ liệu
       await onSubmit({
         ...form,
-
-        tuition: form.tuition,
+        // Ép kiểu hoặc xử lý nếu cần thiết ở đây
+        status: form.status,
       });
     } catch (error) {
       console.error("Submit class error:", error);

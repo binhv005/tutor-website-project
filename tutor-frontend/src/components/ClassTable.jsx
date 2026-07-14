@@ -117,7 +117,9 @@ function ClassTable({ classes, loading, onEdit, onDelete, startIndex = 0 }) {
                   transition
                 "
               >
-                <td className="px-5 py-4 text-gray-500">{startIndex + index + 1}</td>
+                <td className="px-5 py-4 text-gray-500">
+                  {startIndex + index + 1}
+                </td>
 
                 <td className="px-5 py-4">
                   <div

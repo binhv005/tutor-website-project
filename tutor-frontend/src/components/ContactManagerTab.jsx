@@ -95,13 +95,13 @@ function ContactManagerTab() {
 
   async function handleUpdate(id, data) {
     try {
-      const res = await api.put(`/consultations/${id}`, data);
+      await api.put(`/consultations/${id}`, data);
 
-      setContacts(
-        contacts.map((contact) => (contact.id === id ? res.data : contact)),
-      );
-
+      // Đóng modal
       setSelectedContact(null);
+
+      // Gọi lại fetchContacts để làm mới dữ liệu từ server
+      await fetchContacts(statusFilter);
     } catch (error) {
       console.log(error);
     }
@@ -115,7 +115,8 @@ function ContactManagerTab() {
     try {
       await api.delete(`/consultations/${id}`);
 
-      setContacts(contacts.filter((contact) => contact.id !== id));
+      // Gọi lại fetchContacts để làm mới dữ liệu từ server
+      await fetchContacts(statusFilter);
     } catch (error) {
       console.log(error);
     }
