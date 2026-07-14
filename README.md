@@ -8,11 +8,13 @@ A full-stack web application for managing tutoring classes in a tutoring center.
 
 ## 📸 Demo
 * Login
-* <img width="1920" height="832" alt="image" src="https://github.com/user-attachments/assets/e77edc9a-171a-4200-be00-d06b24b1897b" />
-* Dashboard
+<img width="1920" height="832" alt="image" src="https://github.com/user-attachments/assets/e77edc9a-171a-4200-be00-d06b24b1897b" />
 * Class Management
+<img width="1891" height="835" alt="image" src="https://github.com/user-attachments/assets/54b9bbd2-61fd-4f1d-9928-cff018634b92" />
 * Filtering & Search
-* Export Class Information
+<img width="1470" height="655" alt="image" src="https://github.com/user-attachments/assets/955c6399-4fe0-4f00-be43-eeadf04b395f" />
+* Contact Management
+* <img width="1920" height="838" alt="image" src="https://github.com/user-attachments/assets/23106bee-47fa-4da4-95c7-9f53314c1cbc" />
 
 ---
 
@@ -38,12 +40,20 @@ A full-stack web application for managing tutoring classes in a tutoring center.
 * Filter by status
 * Export class information to text
 
-### Validation
+### Consultation Management
+* Submit consultation requests from the public website
+* View consultation requests in the Admin Dashboard
+* Update consultation status (Pending / Contacted)
+* Delete consultation requests
 
-* Zod Validation
-* Vietnamese phone validation
-* Tuition format validation
-* Weekly sessions validation
+
+### API & Validation
+* RESTful API
+* Swagger API Documentation
+* Zod Request Validation
+* Vietnamese Phone Number Validation
+* Tuition Format Validation
+* Weekly Sessions Validation
 
 ### UI
 
@@ -152,7 +162,7 @@ Protected API
 ## Clone project
 
 ```bash
-git clone https://github.com/your-username/tutor-management-system.git
+[git clone https://github.com/your-username/tutor-management-system.git](https://github.com/binhv005/tutor-website-project.git)
 ```
 
 ---
@@ -257,15 +267,16 @@ Vietnamese phone numbers only.
 
 # 🎯 Future Improvements
 
-* Contact management module
-* Dashboard statistics
-* Export Excel/PDF
-* Image upload
-* Activity log
-* Search optimization
-* Unit Testing
-* Docker Deployment
-* CI/CD Pipeline
+* Dashboard analytics (Total classes, consultations, completed classes)
+* Export data to Excel/PDF
+* Tutor management module
+* Email notifications
+* Activity logs
+* Unit Testing & Integration Testing
+* Docker deployment
+* CI/CD with GitHub Actions
+* Redis caching
+* Logging with Winston/Morgan
 
 ---
 
