@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -7,19 +8,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// --- ENUMS ---
-
 enum Role {
   ADMIN
-  TEACHER
-  TUTOR
-  STUDENT
 }
 
 enum Status {
   PENDING
-  ACCEPT
-  REJECT
+  CONTACTED
 }
 
 enum ClassStatus {
@@ -27,151 +22,52 @@ enum ClassStatus {
   ASSIGNED
 }
 
-enum Gender {
-  MALE
-  FEMALE
-}
 
-enum MessageStatus {
-  SENDING
-  SENT
-  READ
-}
-
-enum Level {
-  STUDENT
-  GRADUATED
-}
-
-// --- MODELS ---
 
 model User {
   id         Int           @id @default(autoincrement())
-  name       String
-  email      String        @unique
+  username       String    @unique
   password   String
-  role       Role
-  profile    Profile?
-  
+  role       Role          @default(ADMIN)
   createdClasses   Class[]       @relation("AdminCreateClass")
-  
-  // Quan hệ với bảng Message (gửi và nhận)
-  sentMessages     Message[] @relation("SentMessages")
-  receivedMessages Message[] @relation("ReceivedMessages")
-  
-  documents   Document[]
-  applications Application[]
-
-  created_at DateTime      @default(now())
-  updated_at DateTime      @updatedAt
-}
-
-model Profile {
-  id              Int       @id @default(autoincrement())
-  dob             DateTime
-  gender          Gender    
-  phone           String    @unique
-  address         String
-  avatar          String?
-  level           Level     
-  current_school  String
-  graduation_year String?
-  
-  subjects        Subject[]
-  grades          Grade[]
-  status          Status    @default(PENDING)
-
-  user_id Int  @unique
-  user    User @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Class {
   id              Int           @id @default(autoincrement())
-  require         String        
+  teacherRequirement         String        
   subject         String        
   grade           String        
-  area            String         
-  weekly_sessions String         
-  tuition         Int         
-  students        String       
+  address            String         
+  weeklySessions String         
+  tuition         String         
   status          ClassStatus   @default(AVAILABLE)
   note            String?        
   
-  parent_name     String
-  parent_phone    String
+  parentName     String
+  parentPhone    String
 
-  applications    Application[]
+  admin           User          @relation("AdminCreateClass", fields: [createdBy], references: [id], onDelete: Cascade)
+  createdBy Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  created_by      Int
-  admin           User          @relation("AdminCreateClass", fields: [created_by], references: [id], onDelete: Cascade)
-  
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  @@index([subject])
+  @@index([grade])
+  @@index([teacherRequirement])
+  @@index([address])
 }
 
-model Subject {
-  id         Int       @id @default(autoincrement())
-  name       String
-  profiles   Profile[] 
-  created_at DateTime  @default(now())
-}
-
-model Grade {
-  id         Int       @id @default(autoincrement())
-  name       String
-  profiles   Profile[] 
-  created_at DateTime  @default(now())
-}
-
-model Document {
-  id       Int     @id @default(autoincrement())
-  title    String
-  subject  String  
-  grade    String  
-  file_url String? 
-
-  tutor_id Int
-  tutor    User @relation(fields: [tutor_id], references: [id])
-  
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model Message {
-  id      Int           @id @default(autoincrement())
-  content String        
-  status  MessageStatus 
-
-  sender_id Int
-  sender    User @relation("SentMessages", fields: [sender_id], references: [id])
-
-  receiver_id Int 
-  receiver    User @relation("ReceivedMessages", fields: [receiver_id], references: [id])
-
-  created_at DateTime @default(now()) 
-}
-
-model Application {
-  id Int @id @default(autoincrement())
-
-  class_id Int
-  class    Class @relation(fields: [class_id], references: [id])
-  
-  status   Status 
-  tutor_id Int
-  tutor    User @relation(fields: [tutor_id], references: [id])
-  
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model Contact {
+model Consultation {
   id         Int      @id @default(autoincrement())
   name       String  
-  phone      String  
-  content    String 
-  created_at DateTime @default(now())
+  phone      String   
+  grade      String
+  subject      String
+  status      Status @default(PENDING)
+  message    String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

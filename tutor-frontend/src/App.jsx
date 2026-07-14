@@ -1,31 +1,39 @@
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import TutorCard from "./components/TutorCard";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PublicLayout from "./layouts/PublicLayout";
+import Home from "./pages/Home";
+import ServicePage from "./pages/ServicePage";
+import TuitionPage from "./pages/TuitionPage";
+import ScrollToTop from "./components/ScrollToTop";
+import ParentPage from "./pages/ParentPage";
+import TutorPage from "./pages/TutorPage";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import AdminRoute from "./route/adminRoute";
+import Forbidden from "./pages/Forbidden";
 function App() {
   return (
-    <>
-      <Header />
-      <TutorCard
-        name="Nguyen Van Muoi"
-        subject="Toan"
-        grade="Lop 9"
-        address="Ho Chi Minh"
-      />
-      <TutorCard
-        name="Nguyen Thi A"
-        subject="Van"
-        grade="Lop 12"
-        address="Tien Giang"
-      />
-      <TutorCard
-        name="Nguyen Van D"
-        subject="Sinh"
-        grade="Lop 4"
-        address="Thai Nguyen"
-      />
-      <Footer />
-    </>
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<PublicLayout />}>
+          <Route index element={<Home />} />
+          <Route path="tuitions" element={<TuitionPage />} />
+          <Route path="services" element={<ServicePage />} />
+          <Route path="parents" element={<ParentPage />} />
+          <Route path="tutors" element={<TutorPage />} />
+        </Route>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <AdminRoute>
+              <DashboardPage />
+            </AdminRoute>
+          }
+        />
+        <Route path="/403" element={<Forbidden />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
