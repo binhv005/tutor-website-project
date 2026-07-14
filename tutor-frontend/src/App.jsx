@@ -8,7 +8,7 @@ import ParentPage from "./pages/ParentPage";
 import TutorPage from "./pages/TutorPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
-import AdminRoute from "./route/AdminRoute";
+import TempTempAdminRoute from "./route/TempTempAdminRoute";
 import Forbidden from "./pages/Forbidden";
 function App() {
   return (
@@ -26,9 +26,9 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <AdminRoute>
+            <TempAdminRoute>
               <DashboardPage />
-            </AdminRoute>
+            </TempAdminRoute>
           }
         />
         <Route path="/403" element={<Forbidden />} />
