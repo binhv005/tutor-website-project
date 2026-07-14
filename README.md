@@ -162,7 +162,7 @@ Protected API
 ## Clone project
 
 ```bash
-[git clone https://github.com/your-username/tutor-management-system.git](https://github.com/binhv005/tutor-website-project.git)
+git clone https://github.com/binhv005/tutor-website-project.git
 ```
 
 ---
