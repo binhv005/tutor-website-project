@@ -1,57 +1,107 @@
 # 🎓 Tutor Center Management System
 
-A full-stack web application for managing tutoring classes in a tutoring center. The system allows administrators to manage classes, update their status, and organize tutoring requests through a clean dashboard.
+A full-stack web application for managing tutoring center operations.
 
-> Developed as a portfolio project for Backend Developer Internship.
+The system provides an admin dashboard that allows administrators to manage tutoring classes, handle consultation requests, and organize teaching information efficiently.
 
----
-
-## 📸 Demo
-
-Frontend:
-
-https://tutor-website-project-ten.vercel.app
-
-Backend API:
-
-https://tutor-website-project.onrender.com
-
-API Documentation:
-
-https://tutor-website-project.onrender.com/api-docs
 
 ---
 
-## ✨ Features
+# 🌐 Demo
 
-### Authentication
+## Frontend
+
+🔗 https://tutor-website-project-ten.vercel.app
+
+## Backend API
+
+🔗 https://tutor-website-project.onrender.com
+
+## API Documentation (Swagger)
+
+🔗 https://tutor-website-project.onrender.com/api-docs
+
+---
+
+# 🔑 Demo Account
+
+You can use the following account to test the application:
+
+| Field    | Value          |
+| -------- | -------------- |
+| Username | `admin`        |
+| Password | `Admin@123456` |
+| Role     | `ADMIN`        |
+
+> This account is provided for demo purposes.
+
+---
+
+# 📸 Screenshots
+
+<div align="center">
+
+<img src="./screenshots/login.png" width="700"/>
+
+<br/>
+
+Login Page
+
+<br/><br/>
+
+<img src="./screenshots/dashboard.png" width="900"/>
+
+<br/>
+
+Admin Dashboard
+
+</div>
+
+---
+
+# ✨ Features
+
+## 🔐 Authentication
 
 * Admin Login
 * JWT Authentication
-* HttpOnly Cookie
-* Protected Routes
+* HttpOnly Cookie Storage
+* Protected API Routes
 * Role-based Authorization
 
-### Class Management
+## 📚 Class Management
 
-* Create new class
+Administrators can:
+
+* Create new classes
 * Update class information
-* Delete class
+* Delete classes
 * Change class status
+* View class list
 * Pagination
-* Filter by subject
-* Filter by grade
-* Filter by status
+* Filter classes by:
+
+  * Subject
+  * Grade
+  * Status
+  * Address
+  * Teacher requirements
 * Export class information to text
 
-### Consultation Management
-* Submit consultation requests from the public website
-* View consultation requests in the Admin Dashboard
-* Update consultation status (Pending / Contacted)
+## 📞 Consultation Management
+
+Administrators can:
+
+* Receive consultation requests from public website
+* View consultation information
+* Update consultation status:
+
+  * Pending
+  * Contacted
 * Delete consultation requests
 
+## 📡 API & Validation
 
-### API & Validation
 * RESTful API
 * Swagger API Documentation
 * Zod Request Validation
@@ -59,9 +109,9 @@ https://tutor-website-project.onrender.com/api-docs
 * Tuition Format Validation
 * Weekly Sessions Validation
 
-### UI
+## 🎨 UI Features
 
-* Responsive Dashboard
+* Responsive Admin Dashboard
 * Modal Form
 * Loading State
 * Confirmation Dialog
@@ -74,7 +124,7 @@ https://tutor-website-project.onrender.com/api-docs
 
 ## Frontend
 
-* React
+* React.js
 * Vite
 * Axios
 * Tailwind CSS
@@ -87,17 +137,18 @@ https://tutor-website-project.onrender.com/api-docs
 * Prisma ORM
 * PostgreSQL
 * JWT
+* bcrypt
 * Zod
 
-  
-### Database
-
+## Database
 
 * PostgreSQL
-* Neon PostgreSQL (Production)
----
 
-### Deployment
+Production Database:
+
+* Neon PostgreSQL
+
+## Deployment
 
 Frontend:
 
@@ -109,15 +160,44 @@ Backend:
 
 Database:
 
-* Neon
+* Neon PostgreSQL
+
+---
 
 # 🏗 System Architecture
-<img width="277" height="649" alt="image" src="https://github.com/user-attachments/assets/76b66dc2-eb18-4beb-9d90-b30e4e58bd41" />
 
+<div align="center">
+
+<img src="./screenshots/architecture.png" width="350"/>
+
+</div>
+
+Architecture flow:
+
+```
+User
+ |
+ |
+React Frontend (Vercel)
+ |
+ |
+Axios Request
+ |
+ |
+Express REST API (Render)
+ |
+ |
+Prisma ORM
+ |
+ |
+PostgreSQL Database (Neon)
+```
+
+---
 
 # 📁 Project Structure
 
-```text
+```
 backend
 │
 ├── src
@@ -134,6 +214,7 @@ backend
 │
 └── package.json
 
+
 frontend
 │
 ├── src
@@ -147,95 +228,136 @@ frontend
 
 ---
 
-# 🗄 Database
+# 🗄 Database Design
 
-Main entities
+Main entities:
 
-* User (Admin)
+* User
 * Class
+* Consultation
 
-Relationship
+Relationship:
 
-```text
+```
 Admin (1)
-      │
-      │
-      └───────────< Class (N)
+    |
+    |
+    └──────────< Class (N)
 ```
 
 ---
 
 # 🔐 Authentication Flow
 
-```text
+```
 Admin Login
-      │
+
+      |
       ▼
-Verify Password
-      │
+
+Validate username/password
+
+      |
       ▼
-Generate JWT
-      │
+
+Compare password with bcrypt
+
+      |
       ▼
-Store HttpOnly Cookie
-      │
+
+Generate JWT Token
+
+      |
       ▼
-Protected API
+
+Store token in HttpOnly Cookie
+
+      |
+      ▼
+
+Access Protected APIs
 ```
 
 ---
 
 # 🚀 Installation
 
-## Clone project
+## Clone Repository
 
 ```bash
 git clone https://github.com/binhv005/tutor-website-project.git
 ```
 
----
-
-## Backend
+# Backend Setup
 
 ```bash
 cd backend
+
 npm install
 ```
 
 Create `.env`
 
 ```env
-DATABASE_URL="postgresql://..."
-JWT_SECRET=your_secret
-PORT=5000
+DATABASE_URL="your_postgresql_url"
+
+JWT_SECRET="your_secret"
+
+CLIENT_URL="http://localhost:5173"
+
+PORT=5050
 ```
 
-Run migration
+Run Prisma migration:
 
 ```bash
 npx prisma migrate dev
 ```
 
-Generate Prisma Client
+Generate Prisma Client:
 
 ```bash
 npx prisma generate
 ```
 
-Start server
+Start backend:
 
 ```bash
 npm run dev
 ```
 
+Backend runs at:
+
+```
+http://localhost:5050
+```
+
 ---
 
-## Frontend
+# Frontend Setup
 
 ```bash
 cd frontend
+
 npm install
+```
+
+Create `.env`
+
+```env
+VITE_API_URL=http://localhost:5050/api
+```
+
+Run:
+
+```bash
 npm run dev
+```
+
+Frontend runs at:
+
+```
+http://localhost:5173
 ```
 
 ---
@@ -244,58 +366,63 @@ npm run dev
 
 ## Authentication
 
-| Method | Endpoint     |
-| ------ | ------------ |
-| POST   | /auth/login  |
-| POST   | /auth/logout |
-
----
+| Method | Endpoint           |
+| ------ | ------------------ |
+| POST   | `/api/auth/login`  |
+| POST   | `/api/auth/logout` |
 
 ## Classes
 
-| Method | Endpoint     |
-| ------ | ------------ |
-| GET    | /classes     |
-| POST   | /classes     |
-| PUT    | /classes/:id |
-| DELETE | /classes/:id |
+| Method | Endpoint           |
+| ------ | ------------------ |
+| GET    | `/api/classes`     |
+| POST   | `/api/classes`     |
+| PUT    | `/api/classes/:id` |
+| DELETE | `/api/classes/:id` |
+
+## Consultations
+
+| Method | Endpoint                 |
+| ------ | ------------------------ |
+| GET    | `/api/consultations`     |
+| PUT    | `/api/consultations/:id` |
+| DELETE | `/api/consultations/:id` |
 
 ---
 
 # 📌 Validation Rules
 
-### Tuition
+## Tuition Format
 
-Examples
+Examples:
 
 ```
 120k/buổi
+
 300k/buổi
+
 3tr/tháng
 ```
 
----
+## Weekly Sessions
 
-### Weekly Sessions
-
-Examples
+Examples:
 
 ```
 3 buổi/tuần
+
 2 buổi/tuần Thứ 2 4 6
 ```
 
----
+## Phone Number
 
-### Phone
-
-Vietnamese phone numbers only.
+Only Vietnamese phone numbers are accepted.
 
 ---
 
 # 🎯 Future Improvements
 
-* Dashboard analytics (Total classes, consultations, completed classes)
+* Dashboard analytics
 * Export data to Excel/PDF
 * Tutor management module
 * Email notifications
@@ -312,7 +439,11 @@ Vietnamese phone numbers only.
 
 **Bình Võ**
 
-Backend Developer (Node.js)
+Backend Developer Intern Candidate
+
+GitHub:
+
+https://github.com/binhv005
 
 ---
 
